@@ -1,0 +1,2 @@
+﻿main.obj : error LNK2019: unresolved external symbol _printd referenced in function _main
+C:\Users\Ryan Thomas Bray\Desktop\packer\Debug\Stub.exe : fatal error LNK1120: 1 unresolved externals
