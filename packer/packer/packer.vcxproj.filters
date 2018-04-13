@@ -24,9 +24,6 @@
     <ClInclude Include="aes.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="stub.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="packer.c">

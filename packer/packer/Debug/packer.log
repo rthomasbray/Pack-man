@@ -1,27 +1,8 @@
-﻿  pack.c
-c:\users\ryan thomas bray\desktop\packer\packer\packer.h(12): warning C4005: 'MAX_PATH': macro redefinition
-  c:\program files\windows kits\10\include\10.0.16299.0\shared\minwindef.h(60): note: see previous definition of 'MAX_PATH'
-c:\users\ryan thomas bray\desktop\packer\packer\pack.h(68): error C2143: syntax error: missing ')' before '*'
-c:\users\ryan thomas bray\desktop\packer\packer\pack.h(68): error C2081: 'section': name in formal parameter list illegal
-c:\users\ryan thomas bray\desktop\packer\packer\pack.h(68): error C2143: syntax error: missing '{' before '*'
-c:\users\ryan thomas bray\desktop\packer\packer\pack.h(68): error C2146: syntax error: missing ';' before identifier 'stubPE'
-c:\users\ryan thomas bray\desktop\packer\packer\pack.h(68): error C2059: syntax error: ')'
-c:\users\ryan thomas bray\desktop\packer\packer\pack.c(7): error C2059: syntax error: '}'
-c:\users\ryan thomas bray\desktop\packer\packer\pack.c(8): warning C4034: sizeof returns 0
-c:\users\ryan thomas bray\desktop\packer\packer\pack.c(50): error C2143: syntax error: missing ')' before '*'
-c:\users\ryan thomas bray\desktop\packer\packer\pack.c(50): error C2081: 'section': name in formal parameter list illegal
-c:\users\ryan thomas bray\desktop\packer\packer\pack.c(50): error C2143: syntax error: missing '{' before '*'
-c:\users\ryan thomas bray\desktop\packer\packer\pack.c(50): error C2146: syntax error: missing ';' before identifier 'stubPE'
-c:\users\ryan thomas bray\desktop\packer\packer\pack.c(50): error C2059: syntax error: ')'
-c:\users\ryan thomas bray\desktop\packer\packer\pack.c(50): error C2054: expected '(' to follow 'stubPE'
-  packer.c
-c:\users\ryan thomas bray\desktop\packer\packer\pack.h(68): error C2143: syntax error: missing ')' before '*'
-c:\users\ryan thomas bray\desktop\packer\packer\pack.h(68): error C2081: 'section': name in formal parameter list illegal
-c:\users\ryan thomas bray\desktop\packer\packer\pack.h(68): error C2143: syntax error: missing '{' before '*'
-c:\users\ryan thomas bray\desktop\packer\packer\pack.h(68): error C2146: syntax error: missing ';' before identifier 'stubPE'
-c:\users\ryan thomas bray\desktop\packer\packer\pack.h(68): error C2059: syntax error: ')'
+﻿  packer.c
 c:\users\ryan thomas bray\desktop\packer\packer\packer.h(12): warning C4005: 'MAX_PATH': macro redefinition
   c:\program files\windows kits\10\include\10.0.16299.0\shared\minwindef.h(60): note: see previous definition of 'MAX_PATH'
 c:\users\ryan thomas bray\desktop\packer\packer\packer.c(61): warning C4047: 'function': '::size_t' differs in levels of indirection from 'uint32_t *'
 c:\users\ryan thomas bray\desktop\packer\packer\packer.c(61): warning C4024: 'fwrite': different types for formal and actual parameter 2
-  Generating Code...
+  packer.vcxproj -> C:\Users\Ryan Thomas Bray\Desktop\packer\Debug\packer.exe
+  hello worldThe file does not exist!
+  Usage: "packer.exe exe_file_to_pack"

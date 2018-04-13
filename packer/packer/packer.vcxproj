@@ -61,7 +61,7 @@
       </Message>
     </PreBuildEvent>
     <PostBuildEvent>
-      <Command>$(OutputPath)$(TargetFileName) $(OutputPath)calc_pi.exe</Command>
+      <Command>"$(OutputPath)$(TargetFileName)"  "$(OutputPath)calc_pi.exe"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -79,14 +79,13 @@
       <AdditionalDependencies>shlwapi.lib;Cabinet.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
-      <Command>$(OutputPath)$(TargetFileName) $(OutputPath)calc_pi.exe</Command>
+      <Command>"$(OutputPath)$(TargetFileName)"  "$(OutputPath)calc_pi.exe"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="aes.h" />
     <ClInclude Include="pack.h" />
     <ClInclude Include="packer.h" />
-    <ClInclude Include="stub.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="aes.c" />

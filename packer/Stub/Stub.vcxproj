@@ -50,7 +50,7 @@
       <SDLCheck>true</SDLCheck>
     </ClCompile>
     <PostBuildEvent>
-      <Command>python $(ProjectDir)buildHeader.py $(TargetDir)Stub.exe $(SolutionDir)packer\stub.h</Command>
+      <Command>python "$(ProjectDir)buildHeader.py" "$(TargetDir)Stub.exe" "$(SolutionDir)packer\stub.h"</Command>
       <Message>Build the stub header file with the bytes from the EXE</Message>
     </PostBuildEvent>
     <Link>
@@ -73,7 +73,7 @@
       <GenerateDebugInformation>false</GenerateDebugInformation>
     </Link>
     <PostBuildEvent>
-      <Command>python $(ProjectDir)buildHeader.py $(TargetDir)Stub.exe $(SolutionDir)packer\stub.h</Command>
+      <Command>python "$(ProjectDir)buildHeader.py" "$(TargetDir)Stub.exe" "$(SolutionDir)packer\stub.h"</Command>
       <Message>Build the stub header file with the bytes from the EXE</Message>
     </PostBuildEvent>
   </ItemDefinitionGroup>

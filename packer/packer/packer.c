@@ -4,7 +4,7 @@ int main(int argc, char ** argv) {
 	char exe_file_path[MAX_PATH] = { 0 };
 	char out_file_path[MAX_PATH] = {0};
 	uint8_t key[KEY_LEN] = { 'a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z','a','b','c','d','e','f' };
-
+	printf("hello world");
 
 	// Check that the correct arguments were provided to the program
 	// If incorrect arguments were provided then print usage statement and exit

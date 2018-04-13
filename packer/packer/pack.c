@@ -2,6 +2,8 @@
 
 // Stub insertion by post build event on stub project
 // Ignore errors here until build
+
+
 uint8_t stub[] = { 
 #include "stub.h" 
 };
@@ -47,7 +49,7 @@ int patchKey(uint8_t * data,uint32_t size,uint8_t * key) {
 	return TRUE;
 }
 
-int stubAddSection(uint8_t ** dataBuffer, uint32_t * rsize, uint8_t * stub, int sizeOfStub, section * sections,pe stubPE) {
+int stubAddSection(uint8_t ** dataBuffer, uint32_t * rsize, uint8_t * stub, int sizeOfStub, IMAGE_SECTION_HEADER * sections,IMAGE_NT_HEADERS stubPE) {
 	// Fix up the stub PE header to include the extra section
 	// add the input bytes to the end
 	// TODO
@@ -55,6 +57,7 @@ int stubAddSection(uint8_t ** dataBuffer, uint32_t * rsize, uint8_t * stub, int 
 
 	return TRUE;
 }
+
 
 int inCompress(uint8_t * input, int insize, uint8_t ** output,int * rsize) {
 	COMPRESSOR_HANDLE Compressor = NULL;

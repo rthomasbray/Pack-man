@@ -1,7 +1,7 @@
 #include "main.h"
 
 int main() {
-	printd("Hello World from the stub\n"); // To mark the start
+	printf("Hello World from the stub\n"); // To mark the start
 	//printf("Hello World from the stub\n"); // To mark the start
 
 
