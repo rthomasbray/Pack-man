@@ -1,8 +1,28 @@
-﻿  packer.c
-c:\users\ryan thomas bray\desktop\packer\packer\packer.h(12): warning C4005: 'MAX_PATH': macro redefinition
-  c:\program files\windows kits\10\include\10.0.16299.0\shared\minwindef.h(60): note: see previous definition of 'MAX_PATH'
-c:\users\ryan thomas bray\desktop\packer\packer\packer.c(61): warning C4047: 'function': '::size_t' differs in levels of indirection from 'uint32_t *'
-c:\users\ryan thomas bray\desktop\packer\packer\packer.c(61): warning C4024: 'fwrite': different types for formal and actual parameter 2
+﻿  pack.c
+c:\users\ryan thomas bray\desktop\packer\packer\pack.c(60): warning C4047: 'function': 'unsigned char **' differs in levels of indirection from 'unsigned char *'
+c:\users\ryan thomas bray\desktop\packer\packer\pack.c(60): warning C4024: 'stubAddSection': different types for formal and actual parameter 1
+c:\users\ryan thomas bray\desktop\packer\packer\pack.c(60): warning C4133: 'function': incompatible types - from 'PIMAGE_SECTION_HEADER *' to 'PIMAGE_NT_HEADERS *'
+c:\users\ryan thomas bray\desktop\packer\packer\pack.c(90): warning C4028: formal parameter 5 different from declaration
+  packer.c
+  Generating Code...
   packer.vcxproj -> C:\Users\Ryan Thomas Bray\Desktop\packer\Debug\packer.exe
-  hello worldThe file does not exist!
-  Usage: "packer.exe exe_file_to_pack"
+  
+  
+  [+] Generating key
+  [+] Packing
+  [+] Header correct
+  [+] Attempting to compress
+  	[+] Input Size: 7680
+  	[+] Output Size:5084
+  [+] Compression complete
+  [+] Encrypting
+  	[+] Padding with 4 bytes
+  	[+] Buffer size is now 5088 bytes
+  	[+] Encryption Finished
+  [+] Encryption complete
+  [+] Packing complete
+  [+] Opening file
+  [+] Writing to file
+  File size: 5088
+  [+] Closing file
+  [+] Freeing memory and leaving packer

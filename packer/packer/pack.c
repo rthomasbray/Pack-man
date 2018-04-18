@@ -11,34 +11,72 @@ int sizeOfStub = sizeof(stub);
 
 
 int pack(uint8_t * input,uint8_t ** output, uint8_t * key,uint32_t * rsize,uint32_t insize) {
+	printf("[+] Packing\n");
+
 	// Load/Validate the PE data from the bytes
-	// TODO
-	
+	// TODO (complete)
+	PIMAGE_DOS_HEADER dosHeader = (PIMAGE_DOS_HEADER)input;
+	if (dosHeader->e_magic != IMAGE_DOS_SIGNATURE)
+	{
+		printf("[-] Does not match PE DOS header");
+		return FALSE;
+	}
+	printf("[+] Header correct\n");
+
+
 	//Compress The input data
-	// TODO
-	
-	// TEST ONLY
-	// Test by adding to output buffer and returning here
-	// TODO
+	// TODO (complete)
+	printf("[+] Attempting to compress\n");
+	inCompress(input, insize, output, rsize);
+	printf("[+] Compression complete\n");
 
 	// Encrypt the compressed data
-	// TODO
+	// TODO (complete)
+	printf("[+] Encrypting\n");
+	inEncrypt(output, rsize, key);
+	printf("[+] Encryption complete\n");
 
 	// Load the PE for the stub
 	// Extract / Manipulate stub PE data as needed
-	// TODO
+	// TODO (maybe complete)
 
-	// Combine stub and section by calling stubAddSection
+	//stub dos header
+	PIMAGE_DOS_HEADER stubDosHeader = (PIMAGE_DOS_HEADER)stub;
+	//stub nt header
+	PIMAGE_NT_HEADERS stubNTHeader = (PIMAGE_NT_HEADERS)((BYTE *)stubDosHeader + stubDosHeader->e_lfanew);
+	//getting file header to calculate the amount of sections
+	PIMAGE_FILE_HEADER stubFileHeader = (PIMAGE_FILE_HEADER)&stubNTHeader->FileHeader;
+	//get optional header to add section
+	PIMAGE_OPTIONAL_HEADER stubOptionalHeader = (PIMAGE_OPTIONAL_HEADER)&stubNTHeader->OptionalHeader;
+	//get section header (not sure if its the start of first or end of last ---> seems like end of last)
+	PIMAGE_SECTION_HEADER stubSectionHeader = (PIMAGE_SECTION_HEADER)((BYTE *)stubNTHeader + sizeof(IMAGE_NT_HEADERS) + (stubFileHeader->NumberOfSections - 1) * sizeof(IMAGE_SECTION_HEADER));
+
+	
+
+
+	// Combine stub and section by calling ----> add section?
 	// give the packed data as arguments
-	// TODO
+	// TODO (maybe complete)
+	stubAddSection(input, rsize, stub, sizeOfStub, &stubSectionHeader, stubNTHeader);
+
+
+	//makes final buffer size the size of the stub + the size of exe file
+	//TODO (maybe complete)
+	
+	uint8_t finSize = sizeof(stub) + *rsize;
+	uint8_t * fin = (uint8_t *)malloc(finSize);
 
 	// Add in key by calling patchKey
-	// TODO
+	//TODO (maybe complete)
+	patchKey(fin, finSize, key);
 
 	// Free any dynamically allocated memory
-	// TODO
+	// TODO (maybe complete)
+	free(fin);
 
 
+
+	printf("[+] Packing complete\n");
 	return TRUE;
 }
 
@@ -49,11 +87,13 @@ int patchKey(uint8_t * data,uint32_t size,uint8_t * key) {
 	return TRUE;
 }
 
-int stubAddSection(uint8_t ** dataBuffer, uint32_t * rsize, uint8_t * stub, int sizeOfStub, IMAGE_SECTION_HEADER * sections,IMAGE_NT_HEADERS stubPE) {
+int stubAddSection(uint8_t ** dataBuffer, uint32_t * rsize, uint8_t * stub, int sizeOfStub, PIMAGE_SECTION_HEADER * sections, PIMAGE_NT_HEADERS stubPE) {
 	// Fix up the stub PE header to include the extra section
 	// add the input bytes to the end
 	// TODO
 	// Note: this function will be a lot of work.
+
+
 
 	return TRUE;
 }
@@ -63,13 +103,13 @@ int inCompress(uint8_t * input, int insize, uint8_t ** output,int * rsize) {
 	COMPRESSOR_HANDLE Compressor = NULL;
 	SIZE_T CompressedDataSize, CompressedBufferSize;
 
-
+	
 	// Create an Xpress compressor.
 	if (!CreateCompressor(COMPRESS_ALGORITHM_XPRESS,NULL,&Compressor)) {	
 		printf("\t[-] Failed to create a compressor Code:%d\n", GetLastError());
 		return FALSE;
 	}               
-
+	
 	// Query compressed buffer size.
 	// Proto Compress(handle,input buffer,uncompressed size,compressed buffer,compressed buffer size, compressed data size)
 	if (!Compress(Compressor, input, insize, NULL, 0, &CompressedBufferSize)){
@@ -79,7 +119,7 @@ int inCompress(uint8_t * input, int insize, uint8_t ** output,int * rsize) {
 		}
 
 	}
-
+	
 	// allocate new size for output.
 	*output = realloc(*output,CompressedBufferSize);
 	if (!*output) {
@@ -87,7 +127,6 @@ int inCompress(uint8_t * input, int insize, uint8_t ** output,int * rsize) {
 		return FALSE;
 	}
 	*rsize = CompressedBufferSize;
-
 
 	//  Call Compress() again to do real compression and output the compressed data
 	if(!Compress(Compressor, input, insize, *output, CompressedBufferSize, &CompressedDataSize)){
@@ -100,15 +139,15 @@ int inCompress(uint8_t * input, int insize, uint8_t ** output,int * rsize) {
 	*output = realloc(*output, CompressedDataSize);
 	*rsize = CompressedDataSize;
 	CloseCompressor(Compressor);
+	/*
+	printf("\t[D] Output Bytes:\n");
 
-	//printf("\t[D] Output Bytes:\n");
+	for (size_t i = 0; i < *rsize; i++)
+	{
+		printf(" %02x",(*output)[i]);
 
-	//for (size_t i = 0; i < *rsize; i++)
-	//{
-	//	printf(" %02x",(*output)[i]);
-
-	//}
-
+	}
+	*/
 	return TRUE;
 }
 

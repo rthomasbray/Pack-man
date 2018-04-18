@@ -1,0 +1,8 @@
+﻿  aes.c
+  loader.c
+  main.c
+  Generating code
+  Finished generating code
+  All 4 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
+  Stub.vcxproj -> C:\Users\Ryan Thomas Bray\Desktop\packer\Release\Stub.exe
+  Build the stub header file with the bytes from the EXE

@@ -7,10 +7,6 @@
 #include <stdint.h>
 #include "pack.h"
 
-#define TRUE 1
-#define FALSE 0
-#define MAX_PATH 100
-
 #define KEY_LEN 32
 
 // Get the command line arguments

@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<DEFECTS>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>c:\users\ryan thomas bray\desktop\packer\packer\</FILEPATH>
+      <FILENAME>packer.c</FILENAME>
+      <LINE>40</LINE>
+      <COLUMN>6</COLUMN>
+    </SFA>
+    <DEFECTCODE>6387</DEFECTCODE>
+    <DESCRIPTION>'inputFileBuffer' could be '0':  this does not adhere to the specification for the function 'fread'. </DESCRIPTION>
+    <FUNCTION>main</FUNCTION>
+    <DECORATED>main</DECORATED>
+    <FUNCLINE>3</FUNCLINE>
+    <PROBABILITY>1</PROBABILITY>
+    <RANK>4</RANK>
+    <CATEGORY>
+      <RULECATEGORY>mspft</RULECATEGORY>
+    </CATEGORY>
+    <PATH>
+      <SFA>
+        <FILEPATH>c:\users\ryan thomas bray\desktop\packer\packer\</FILEPATH>
+        <FILENAME>packer.c</FILENAME>
+        <LINE>4</LINE>
+        <COLUMN>6</COLUMN>
+      </SFA>
+      <SFA>
+        <FILEPATH>c:\users\ryan thomas bray\desktop\packer\packer\</FILEPATH>
+        <FILENAME>packer.c</FILENAME>
+        <LINE>5</LINE>
+        <COLUMN>6</COLUMN>
+      </SFA>
+      <SFA>
+        <FILEPATH>c:\users\ryan thomas bray\desktop\packer\packer\</FILEPATH>
+        <FILENAME>packer.c</FILENAME>
+        <LINE>6</LINE>
+        <COLUMN>9</COLUMN>
+      </SFA>
+      <SFA>
+        <FILEPATH>c:\users\ryan thomas bray\desktop\packer\packer\</FILEPATH>
+        <FILENAME>packer.c</FILENAME>
+        <LINE>10</LINE>
+        <COLUMN>5</COLUMN>
+      </SFA>
+      <SFA>
+        <FILEPATH>c:\users\ryan thomas bray\desktop\packer\packer\</FILEPATH>
+        <FILENAME>packer.c</FILENAME>
+        <LINE>14</LINE>
+        <COLUMN>7</COLUMN>
+      </SFA>
+      <SFA>
+        <FILEPATH>c:\users\ryan thomas bray\desktop\packer\packer\</FILEPATH>
+        <FILENAME>packer.c</FILENAME>
+        <LINE>21</LINE>
+        <COLUMN>7</COLUMN>
+      </SFA>
+      <SFA>
+        <FILEPATH>c:\users\ryan thomas bray\desktop\packer\packer\</FILEPATH>
+        <FILENAME>packer.c</FILENAME>
+        <LINE>29</LINE>
+        <COLUMN>8</COLUMN>
+      </SFA>
+      <SFA>
+        <FILEPATH>c:\users\ryan thomas bray\desktop\packer\packer\</FILEPATH>
+        <FILENAME>packer.c</FILENAME>
+        <LINE>31</LINE>
+        <COLUMN>6</COLUMN>
+      </SFA>
+      <SFA>
+        <FILEPATH>c:\users\ryan thomas bray\desktop\packer\packer\</FILEPATH>
+        <FILENAME>packer.c</FILENAME>
+        <LINE>33</LINE>
+        <COLUMN>10</COLUMN>
+      </SFA>
+      <SFA>
+        <FILEPATH>c:\users\ryan thomas bray\desktop\packer\packer\</FILEPATH>
+        <FILENAME>packer.c</FILENAME>
+        <LINE>35</LINE>
+        <COLUMN>7</COLUMN>
+      </SFA>
+      <SFA>
+        <FILEPATH>c:\users\ryan thomas bray\desktop\packer\packer\</FILEPATH>
+        <FILENAME>packer.c</FILENAME>
+        <LINE>38</LINE>
+        <COLUMN>11</COLUMN>
+        <KEYEVENT>
+          <ID>1</ID>
+          <KIND>declaration</KIND>
+          <IMPORTANCE>Essential</IMPORTANCE>
+          <MESSAGE>'inputFileBuffer' may be NULL</MESSAGE>
+        </KEYEVENT>
+      </SFA>
+      <SFA>
+        <FILEPATH>c:\users\ryan thomas bray\desktop\packer\packer\</FILEPATH>
+        <FILENAME>packer.c</FILENAME>
+        <LINE>40</LINE>
+        <COLUMN>6</COLUMN>
+        <KEYEVENT>
+          <ID>2</ID>
+          <KIND>declaration</KIND>
+          <IMPORTANCE>Full</IMPORTANCE>
+          <MESSAGE>'inputFileBuffer' is an In/Out argument to 'fread' (declared at c:\program files\windows kits\10\include\10.0.16299.0\ucrt\stdio.h:233)</MESSAGE>
+        </KEYEVENT>
+      </SFA>
+      <SFA>
+        <FILEPATH>c:\users\ryan thomas bray\desktop\packer\packer\</FILEPATH>
+        <FILENAME>packer.c</FILENAME>
+        <LINE>40</LINE>
+        <COLUMN>6</COLUMN>
+        <KEYEVENT>
+          <ID>3</ID>
+          <KIND>usage</KIND>
+          <IMPORTANCE>Essential</IMPORTANCE>
+          <MESSAGE>'inputFileBuffer' should not be NULL, because this is not consistent with the SAL annotation on 'fread'</MESSAGE>
+        </KEYEVENT>
+      </SFA>
+    </PATH>
+  </DEFECT>
+</DEFECTS>

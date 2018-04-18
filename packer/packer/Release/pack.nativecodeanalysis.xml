@@ -1,0 +1,319 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<DEFECTS>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>c:\users\ryan thomas bray\desktop\packer\packer\</FILEPATH>
+      <FILENAME>pack.c</FILENAME>
+      <LINE>52</LINE>
+      <COLUMN>4</COLUMN>
+    </SFA>
+    <DEFECTCODE>6244</DEFECTCODE>
+    <DESCRIPTION>Local declaration of 'stub' hides previous declaration at line '7' of 'c:\users\ryan thomas bray\desktop\packer\packer\pack.c'.</DESCRIPTION>
+    <FUNCTION>stubAddSection</FUNCTION>
+    <DECORATED>stubAddSection</DECORATED>
+    <FUNCLINE>52</FUNCLINE>
+    <PATH>
+      <SFA>
+        <FILEPATH>c:\users\ryan thomas bray\desktop\packer\packer\</FILEPATH>
+        <FILENAME>pack.c</FILENAME>
+        <LINE>7</LINE>
+        <COLUMN>8</COLUMN>
+      </SFA>
+    </PATH>
+  </DEFECT>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>c:\users\ryan thomas bray\desktop\packer\packer\</FILEPATH>
+      <FILENAME>pack.c</FILENAME>
+      <LINE>52</LINE>
+      <COLUMN>4</COLUMN>
+    </SFA>
+    <DEFECTCODE>6244</DEFECTCODE>
+    <DESCRIPTION>Local declaration of 'sizeOfStub' hides previous declaration at line '10' of 'c:\users\ryan thomas bray\desktop\packer\packer\pack.c'.</DESCRIPTION>
+    <FUNCTION>stubAddSection</FUNCTION>
+    <DECORATED>stubAddSection</DECORATED>
+    <FUNCLINE>52</FUNCLINE>
+    <PATH>
+      <SFA>
+        <FILEPATH>c:\users\ryan thomas bray\desktop\packer\packer\</FILEPATH>
+        <FILENAME>pack.c</FILENAME>
+        <LINE>10</LINE>
+        <COLUMN>4</COLUMN>
+      </SFA>
+    </PATH>
+  </DEFECT>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>c:\users\ryan thomas bray\desktop\packer\packer\</FILEPATH>
+      <FILENAME>pack.c</FILENAME>
+      <LINE>84</LINE>
+      <COLUMN>18</COLUMN>
+    </SFA>
+    <DEFECTCODE>6308</DEFECTCODE>
+    <DESCRIPTION>'realloc' might return null pointer: assigning null pointer to '*output', which is passed as an argument to 'realloc', will cause the original memory block to be leaked.</DESCRIPTION>
+    <FUNCTION>inCompress</FUNCTION>
+    <DECORATED>inCompress</DECORATED>
+    <FUNCLINE>62</FUNCLINE>
+    <PATH></PATH>
+  </DEFECT>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>c:\users\ryan thomas bray\desktop\packer\packer\</FILEPATH>
+      <FILENAME>pack.c</FILENAME>
+      <LINE>100</LINE>
+      <COLUMN>18</COLUMN>
+    </SFA>
+    <DEFECTCODE>6308</DEFECTCODE>
+    <DESCRIPTION>'realloc' might return null pointer: assigning null pointer to '*output', which is passed as an argument to 'realloc', will cause the original memory block to be leaked.</DESCRIPTION>
+    <FUNCTION>inCompress</FUNCTION>
+    <DECORATED>inCompress</DECORATED>
+    <FUNCLINE>62</FUNCLINE>
+    <PATH></PATH>
+  </DEFECT>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>c:\users\ryan thomas bray\desktop\packer\packer\</FILEPATH>
+      <FILENAME>pack.c</FILENAME>
+      <LINE>69</LINE>
+      <COLUMN>8</COLUMN>
+    </SFA>
+    <DEFECTCODE>6340</DEFECTCODE>
+    <DESCRIPTION>Mismatch on sign: 'unsigned long' passed as _Param_(2) when some signed type is required in call to 'printf'.</DESCRIPTION>
+    <FUNCTION>inCompress</FUNCTION>
+    <DECORATED>inCompress</DECORATED>
+    <FUNCLINE>62</FUNCLINE>
+    <PATH></PATH>
+  </DEFECT>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>c:\users\ryan thomas bray\desktop\packer\packer\</FILEPATH>
+      <FILENAME>pack.c</FILENAME>
+      <LINE>77</LINE>
+      <COLUMN>9</COLUMN>
+    </SFA>
+    <DEFECTCODE>6340</DEFECTCODE>
+    <DESCRIPTION>Mismatch on sign: 'unsigned long' passed as _Param_(2) when some signed type is required in call to 'printf'.</DESCRIPTION>
+    <FUNCTION>inCompress</FUNCTION>
+    <DECORATED>inCompress</DECORATED>
+    <FUNCLINE>62</FUNCLINE>
+    <PATH></PATH>
+  </DEFECT>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>c:\users\ryan thomas bray\desktop\packer\packer\</FILEPATH>
+      <FILENAME>pack.c</FILENAME>
+      <LINE>86</LINE>
+      <COLUMN>8</COLUMN>
+    </SFA>
+    <DEFECTCODE>6340</DEFECTCODE>
+    <DESCRIPTION>Mismatch on sign: 'unsigned long' passed as _Param_(2) when some signed type is required in call to 'printf'.</DESCRIPTION>
+    <FUNCTION>inCompress</FUNCTION>
+    <DECORATED>inCompress</DECORATED>
+    <FUNCLINE>62</FUNCLINE>
+    <PATH></PATH>
+  </DEFECT>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>c:\users\ryan thomas bray\desktop\packer\packer\</FILEPATH>
+      <FILENAME>pack.c</FILENAME>
+      <LINE>94</LINE>
+      <COLUMN>8</COLUMN>
+    </SFA>
+    <DEFECTCODE>6340</DEFECTCODE>
+    <DESCRIPTION>Mismatch on sign: 'unsigned long' passed as _Param_(2) when some signed type is required in call to 'printf'.</DESCRIPTION>
+    <FUNCTION>inCompress</FUNCTION>
+    <DECORATED>inCompress</DECORATED>
+    <FUNCLINE>62</FUNCLINE>
+    <PATH></PATH>
+  </DEFECT>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>c:\users\ryan thomas bray\desktop\packer\packer\</FILEPATH>
+      <FILENAME>pack.c</FILENAME>
+      <LINE>99</LINE>
+      <COLUMN>7</COLUMN>
+    </SFA>
+    <DEFECTCODE>6340</DEFECTCODE>
+    <DESCRIPTION>Mismatch on sign: 'unsigned long' passed as _Param_(2) when some signed type is required in call to 'printf'.</DESCRIPTION>
+    <FUNCTION>inCompress</FUNCTION>
+    <DECORATED>inCompress</DECORATED>
+    <FUNCLINE>62</FUNCLINE>
+    <PATH></PATH>
+  </DEFECT>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>c:\users\ryan thomas bray\desktop\packer\packer\</FILEPATH>
+      <FILENAME>pack.c</FILENAME>
+      <LINE>131</LINE>
+      <COLUMN>18</COLUMN>
+    </SFA>
+    <DEFECTCODE>6308</DEFECTCODE>
+    <DESCRIPTION>'realloc' might return null pointer: assigning null pointer to '*buffer', which is passed as an argument to 'realloc', will cause the original memory block to be leaked.</DESCRIPTION>
+    <FUNCTION>inEncrypt</FUNCTION>
+    <DECORATED>inEncrypt</DECORATED>
+    <FUNCLINE>115</FUNCLINE>
+    <PATH></PATH>
+  </DEFECT>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>c:\users\ryan thomas bray\desktop\packer\packer\</FILEPATH>
+      <FILENAME>pack.c</FILENAME>
+      <LINE>123</LINE>
+      <COLUMN>7</COLUMN>
+    </SFA>
+    <DEFECTCODE>6340</DEFECTCODE>
+    <DESCRIPTION>Mismatch on sign: 'unsigned char' passed as _Param_(2) when some signed type is required in call to 'printf'.</DESCRIPTION>
+    <FUNCTION>inEncrypt</FUNCTION>
+    <DECORATED>inEncrypt</DECORATED>
+    <FUNCLINE>115</FUNCLINE>
+    <PATH></PATH>
+  </DEFECT>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>c:\users\ryan thomas bray\desktop\packer\packer\</FILEPATH>
+      <FILENAME>pack.c</FILENAME>
+      <LINE>144</LINE>
+      <COLUMN>23</COLUMN>
+    </SFA>
+    <DEFECTCODE>28182</DEFECTCODE>
+    <DESCRIPTION>Dereferencing NULL pointer. '*buffer' contains the same NULL value as 'realloc()`131' did. </DESCRIPTION>
+    <FUNCTION>inEncrypt</FUNCTION>
+    <DECORATED>inEncrypt</DECORATED>
+    <FUNCLINE>115</FUNCLINE>
+    <PROBABILITY>1</PROBABILITY>
+    <RANK>3</RANK>
+    <CATEGORY>
+      <RULECATEGORY>mspft</RULECATEGORY>
+    </CATEGORY>
+    <PATH>
+      <SFA>
+        <FILEPATH>c:\users\ryan thomas bray\desktop\packer\packer\</FILEPATH>
+        <FILENAME>pack.c</FILENAME>
+        <LINE>118</LINE>
+        <COLUMN>16</COLUMN>
+      </SFA>
+      <SFA>
+        <FILEPATH>c:\users\ryan thomas bray\desktop\packer\packer\</FILEPATH>
+        <FILENAME>pack.c</FILENAME>
+        <LINE>119</LINE>
+        <COLUMN>12</COLUMN>
+      </SFA>
+      <SFA>
+        <FILEPATH>c:\users\ryan thomas bray\desktop\packer\packer\</FILEPATH>
+        <FILENAME>pack.c</FILENAME>
+        <LINE>122</LINE>
+        <COLUMN>9</COLUMN>
+      </SFA>
+      <SFA>
+        <FILEPATH>c:\users\ryan thomas bray\desktop\packer\packer\</FILEPATH>
+        <FILENAME>pack.c</FILENAME>
+        <LINE>123</LINE>
+        <COLUMN>7</COLUMN>
+      </SFA>
+      <SFA>
+        <FILEPATH>c:\users\ryan thomas bray\desktop\packer\packer\</FILEPATH>
+        <FILENAME>pack.c</FILENAME>
+        <LINE>131</LINE>
+        <COLUMN>9</COLUMN>
+        <KEYEVENT>
+          <ID>1</ID>
+          <KIND>declaration</KIND>
+          <IMPORTANCE>Essential</IMPORTANCE>
+          <MESSAGE>'*buffer' may be NULL</MESSAGE>
+        </KEYEVENT>
+      </SFA>
+      <SFA>
+        <FILEPATH>c:\users\ryan thomas bray\desktop\packer\packer\</FILEPATH>
+        <FILENAME>pack.c</FILENAME>
+        <LINE>134</LINE>
+        <COLUMN>10</COLUMN>
+      </SFA>
+      <SFA>
+        <FILEPATH>c:\users\ryan thomas bray\desktop\packer\packer\</FILEPATH>
+        <FILENAME>pack.c</FILENAME>
+        <LINE>134</LINE>
+        <COLUMN>24</COLUMN>
+      </SFA>
+      <SFA>
+        <FILEPATH>c:\users\ryan thomas bray\desktop\packer\packer\</FILEPATH>
+        <FILENAME>pack.c</FILENAME>
+        <LINE>140</LINE>
+        <COLUMN>8</COLUMN>
+      </SFA>
+      <SFA>
+        <FILEPATH>c:\users\ryan thomas bray\desktop\packer\packer\</FILEPATH>
+        <FILENAME>pack.c</FILENAME>
+        <LINE>141</LINE>
+        <COLUMN>7</COLUMN>
+      </SFA>
+      <SFA>
+        <FILEPATH>c:\users\ryan thomas bray\desktop\packer\packer\</FILEPATH>
+        <FILENAME>pack.c</FILENAME>
+        <LINE>144</LINE>
+        <COLUMN>23</COLUMN>
+        <KEYEVENT>
+          <ID>2</ID>
+          <KIND>usage</KIND>
+          <IMPORTANCE>Essential</IMPORTANCE>
+          <MESSAGE>'*buffer' is dereferenced, but may still be NULL</MESSAGE>
+        </KEYEVENT>
+      </SFA>
+    </PATH>
+  </DEFECT>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>c:\users\ryan thomas bray\desktop\packer\packer\</FILEPATH>
+      <FILENAME>pack.c</FILENAME>
+      <LINE>232</LINE>
+      <COLUMN>7</COLUMN>
+    </SFA>
+    <DEFECTCODE>6340</DEFECTCODE>
+    <DESCRIPTION>Mismatch on sign: 'unsigned int' passed as _Param_(2) when some signed type is required in call to 'printf'.</DESCRIPTION>
+    <FUNCTION>testCompress</FUNCTION>
+    <DECORATED>testCompress</DECORATED>
+    <FUNCLINE>180</FUNCLINE>
+    <PATH></PATH>
+  </DEFECT>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>c:\users\ryan thomas bray\desktop\packer\packer\</FILEPATH>
+      <FILENAME>pack.c</FILENAME>
+      <LINE>233</LINE>
+      <COLUMN>7</COLUMN>
+    </SFA>
+    <DEFECTCODE>6340</DEFECTCODE>
+    <DESCRIPTION>Mismatch on sign: 'unsigned long' passed as _Param_(2) when some signed type is required in call to 'printf'.</DESCRIPTION>
+    <FUNCTION>testCompress</FUNCTION>
+    <DECORATED>testCompress</DECORATED>
+    <FUNCLINE>180</FUNCLINE>
+    <PATH></PATH>
+  </DEFECT>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>c:\users\ryan thomas bray\desktop\packer\packer\</FILEPATH>
+      <FILENAME>pack.c</FILENAME>
+      <LINE>261</LINE>
+      <COLUMN>8</COLUMN>
+    </SFA>
+    <DEFECTCODE>6340</DEFECTCODE>
+    <DESCRIPTION>Mismatch on sign: 'unsigned long' passed as _Param_(2) when some signed type is required in call to 'printf'.</DESCRIPTION>
+    <FUNCTION>testCompress</FUNCTION>
+    <DECORATED>testCompress</DECORATED>
+    <FUNCLINE>180</FUNCLINE>
+    <PATH></PATH>
+  </DEFECT>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>c:\users\ryan thomas bray\desktop\packer\packer\</FILEPATH>
+      <FILENAME>pack.c</FILENAME>
+      <LINE>264</LINE>
+      <COLUMN>7</COLUMN>
+    </SFA>
+    <DEFECTCODE>6340</DEFECTCODE>
+    <DESCRIPTION>Mismatch on sign: 'unsigned long' passed as _Param_(2) when some signed type is required in call to 'printf'.</DESCRIPTION>
+    <FUNCTION>testCompress</FUNCTION>
+    <DECORATED>testCompress</DECORATED>
+    <FUNCLINE>180</FUNCLINE>
+    <PATH></PATH>
+  </DEFECT>
+</DEFECTS>
