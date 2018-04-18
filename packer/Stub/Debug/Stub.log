@@ -1,2 +1,6 @@
-﻿  Stub.vcxproj -> C:\Users\Ryan Thomas Bray\Desktop\packer\Debug\Stub.exe
+﻿  aes.c
+  loader.c
+  main.c
+  Generating Code...
+  Stub.vcxproj -> C:\Users\Ryan Thomas Bray\Desktop\packer\Debug\Stub.exe
   Build the stub header file with the bytes from the EXE

@@ -1,10 +1,9 @@
 ﻿  pack.c
-c:\users\ryan thomas bray\desktop\packer\packer\pack.c(60): warning C4047: 'function': 'unsigned char **' differs in levels of indirection from 'unsigned char *'
-c:\users\ryan thomas bray\desktop\packer\packer\pack.c(60): warning C4024: 'stubAddSection': different types for formal and actual parameter 1
-c:\users\ryan thomas bray\desktop\packer\packer\pack.c(60): warning C4133: 'function': incompatible types - from 'PIMAGE_SECTION_HEADER *' to 'PIMAGE_NT_HEADERS *'
-c:\users\ryan thomas bray\desktop\packer\packer\pack.c(90): warning C4028: formal parameter 5 different from declaration
-  packer.c
-  Generating Code...
+c:\users\ryan thomas bray\desktop\packer\packer\pack.c(113): warning C4133: '-': incompatible types - from 'unsigned char *' to 'PIMAGE_SECTION_HEADER'
+c:\users\ryan thomas bray\desktop\packer\packer\pack.c(121): warning C4018: '>': signed/unsigned mismatch
+c:\users\ryan thomas bray\desktop\packer\packer\pack.c(150): warning C4047: 'initializing': 'uint32_t *' differs in levels of indirection from 'uint32_t'
+c:\users\ryan thomas bray\desktop\packer\packer\pack.c(160): warning C4244: 'initializing': conversion from 'unsigned long' to 'unsigned char', possible loss of data
+c:\users\ryan thomas bray\desktop\packer\packer\pack.c(174): warning C4244: 'initializing': conversion from 'unsigned long' to 'unsigned char', possible loss of data
   packer.vcxproj -> C:\Users\Ryan Thomas Bray\Desktop\packer\Debug\packer.exe
   
   
@@ -20,9 +19,12 @@ c:\users\ryan thomas bray\desktop\packer\packer\pack.c(90): warning C4028: forma
   	[+] Buffer size is now 5088 bytes
   	[+] Encryption Finished
   [+] Encryption complete
-  [+] Packing complete
-  [+] Opening file
-  [+] Writing to file
-  File size: 5088
-  [+] Closing file
-  [+] Freeing memory and leaving packer
+  [D] 8
+  [D] .reloc
+  [Section Align] 4096
+  [File Align] 512
+  [D] 1f000 594 
+  [D] 1f594
+  [ddddd] 5088
+  [ddddd] 5088
+  [ddddd] 8192 2000

@@ -65,7 +65,7 @@ Parameters:
 [IN] sections - The sections of the binary. Will be examined to find last section.
 [IN] stubPE - The PE structure of the stub
 */
-int stubAddSection(uint8_t ** dataBuffer, uint32_t * rsize, uint8_t * stub, int sizeOfStub, PIMAGE_NT_HEADERS * sections, PIMAGE_NT_HEADERS stubPE);
+int stubAddSection( uint32_t * rsize, uint8_t * stub, int sizeOfStub, PIMAGE_DOS_HEADER stubDosHeader);
 
 /*
 Description:

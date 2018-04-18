@@ -10,7 +10,7 @@ uint8_t stub[] = {
 int sizeOfStub = sizeof(stub);
 
 
-int pack(uint8_t * input,uint8_t ** output, uint8_t * key,uint32_t * rsize,uint32_t insize) {
+int pack(uint8_t * input, uint8_t ** output, uint8_t * key, uint32_t * rsize, uint32_t insize) {
 	printf("[+] Packing\n");
 
 	// Load/Validate the PE data from the bytes
@@ -42,37 +42,33 @@ int pack(uint8_t * input,uint8_t ** output, uint8_t * key,uint32_t * rsize,uint3
 
 	//stub dos header
 	PIMAGE_DOS_HEADER stubDosHeader = (PIMAGE_DOS_HEADER)stub;
-	//stub nt header
-	PIMAGE_NT_HEADERS stubNTHeader = (PIMAGE_NT_HEADERS)((BYTE *)stubDosHeader + stubDosHeader->e_lfanew);
-	//getting file header to calculate the amount of sections
-	PIMAGE_FILE_HEADER stubFileHeader = (PIMAGE_FILE_HEADER)&stubNTHeader->FileHeader;
-	//get optional header to add section
-	PIMAGE_OPTIONAL_HEADER stubOptionalHeader = (PIMAGE_OPTIONAL_HEADER)&stubNTHeader->OptionalHeader;
-	//get section header (not sure if its the start of first or end of last ---> seems like end of last)
-	PIMAGE_SECTION_HEADER stubSectionHeader = (PIMAGE_SECTION_HEADER)((BYTE *)stubNTHeader + sizeof(IMAGE_NT_HEADERS) + (stubFileHeader->NumberOfSections - 1) * sizeof(IMAGE_SECTION_HEADER));
 
+	
 	
 
 
 	// Combine stub and section by calling ----> add section?
 	// give the packed data as arguments
 	// TODO (maybe complete)
-	stubAddSection(input, rsize, stub, sizeOfStub, &stubSectionHeader, stubNTHeader);
+	stubAddSection(rsize, stub, sizeOfStub, stubDosHeader);
 
 
 	//makes final buffer size the size of the stub + the size of exe file
 	//TODO (maybe complete)
 	
-	uint8_t finSize = sizeof(stub) + *rsize;
+	uint8_t finSize = sizeOfStub + *rsize;
 	uint8_t * fin = (uint8_t *)malloc(finSize);
+	memcpy(fin, stub, sizeOfStub);
+	memcpy(fin + sizeOfStub, *output, *rsize);
+	
 
 	// Add in key by calling patchKey
 	//TODO (maybe complete)
-	patchKey(fin, finSize, key);
+	//	patchKey(output, finSize, key);
 
 	// Free any dynamically allocated memory
 	// TODO (maybe complete)
-	free(fin);
+	
 
 
 
@@ -87,12 +83,102 @@ int patchKey(uint8_t * data,uint32_t size,uint8_t * key) {
 	return TRUE;
 }
 
-int stubAddSection(uint8_t ** dataBuffer, uint32_t * rsize, uint8_t * stub, int sizeOfStub, PIMAGE_SECTION_HEADER * sections, PIMAGE_NT_HEADERS stubPE) {
+int stubAddSection( uint32_t * rsize, uint8_t * stub, int sizeOfStub, PIMAGE_DOS_HEADER stubDosHeader) {
 	// Fix up the stub PE header to include the extra section
 	// add the input bytes to the end
 	// TODO
 	// Note: this function will be a lot of work.
 
+	
+	// pe header --> SIGNATURE IS 50 45
+	PIMAGE_NT_HEADERS stubNTHeader = (PIMAGE_NT_HEADERS)((BYTE *)stubDosHeader + stubDosHeader->e_lfanew);
+	//getting file header to calculate the amount of sections
+	//PIMAGE_FILE_HEADER stubFileHeader = (PIMAGE_FILE_HEADER)&stubNTHeader->FileHeader;
+	PIMAGE_FILE_HEADER stubFileHeader = (PIMAGE_FILE_HEADER)(stub + stubDosHeader->e_lfanew + sizeof(DWORD));
+	//get optional header to add section
+	//PIMAGE_OPTIONAL_HEADER stubOptionalHeader = (PIMAGE_OPTIONAL_HEADER)&stubNTHeader->OptionalHeader;
+	PIMAGE_OPTIONAL_HEADER stubOptionalHeader = (PIMAGE_OPTIONAL_HEADER)(stub + stubDosHeader->e_lfanew + sizeof(DWORD) + sizeof(IMAGE_FILE_HEADER));
+	//get section header (not sure if its the start of first or end of last ---> seems like end of last)
+	//PIMAGE_SECTION_HEADER stubSectionHeader = (PIMAGE_SECTION_HEADER)((BYTE *)stubNTHeader + sizeof(IMAGE_NT_HEADERS) + (stubFileHeader->NumberOfSections - 1) * sizeof(IMAGE_SECTION_HEADER));
+	PIMAGE_SECTION_HEADER stubSectionHeader = (PIMAGE_SECTION_HEADER)(stub + stubDosHeader->e_lfanew + sizeof(IMAGE_NT_HEADERS));
+	//number of sections
+	printf("[D] %d\n", stubFileHeader->NumberOfSections);
+	printf("[D] %s\n", stubSectionHeader[stubFileHeader->NumberOfSections -1].Name);
+	printf("[Section Align] %d\n", stubOptionalHeader->SectionAlignment);
+	printf("[File Align] %d\n", stubOptionalHeader->FileAlignment);
+	printf("[D] %x %x \n", stubSectionHeader[stubFileHeader->NumberOfSections - 1].VirtualAddress, stubSectionHeader[stubFileHeader->NumberOfSections - 1].Misc.VirtualSize);
+	printf("[D] %x\n", stubSectionHeader[stubFileHeader->NumberOfSections - 1].VirtualAddress + stubSectionHeader[stubFileHeader->NumberOfSections - 1].Misc.VirtualSize);
+	
+	//check that we have enough size for another section
+	uint32_t sectionTableStart = stubSectionHeader - stub;
+	uint32_t minPtrToRawData = stubSectionHeader[0].PointerToRawData;
+	for (int i = 1; i < stubFileHeader->NumberOfSections; i++)
+	{
+		if (minPtrToRawData > stubSectionHeader[i].PointerToRawData)
+			minPtrToRawData = stubSectionHeader[i].PointerToRawData;
+	}
+	uint32_t realSizeOfSectionTable = minPtrToRawData - sectionTableStart;
+	if ((stubFileHeader->NumberOfSections * 40) + 40 > realSizeOfSectionTable)
+	{
+		printf("[-] Not enough space in sections table");
+		exit(1);
+	}
+	
+	
+	//5 sections need to be set, one is then name
+	// set name to ryan
+	//memcpy(stubSectionHeader[stubFileHeader->NumberOfSections].Name, ".ryan", 8);
+
+	ZeroMemory(&stubSectionHeader[stubFileHeader->NumberOfSections], sizeof(IMAGE_SECTION_HEADER));
+	CopyMemory(&stubSectionHeader[stubFileHeader->NumberOfSections].Name, ".ryan", 8);
+
+	stubFileHeader->NumberOfSections++;
+	
+	
+
+	// set virtual size to the size of the ouptut
+	uint32_t virtSize = *rsize;
+	printf("[ddddd] %d\n", virtSize);
+	printf("[ddddd] %d\n", *rsize);
+	while ((virtSize % 4096) != 0)
+	{
+		
+		virtSize++;
+	}
+
+	printf("[ddddd] %d %x\n", virtSize, virtSize);
+	uint32_t * test = virtSize;
+	stubSectionHeader[stubFileHeader->NumberOfSections].Misc.VirtualSize = virtSize;
+
+	FILE * fp;
+	fp = fopen("test.exe", "wb");
+	fwrite(stub, sizeOfStub, 1, fp);
+
+	exit(0);
+
+	// set virtual address
+	uint8_t virtAddress = stubSectionHeader[stubFileHeader->NumberOfSections - 1].VirtualAddress + stubSectionHeader[stubFileHeader->NumberOfSections - 1].Misc.VirtualSize;
+	stubSectionHeader[stubFileHeader->NumberOfSections].VirtualAddress = virtAddress;
+	
+	
+	// set size of raw data
+	uint8_t rawSize = *rsize;
+	while ((rawSize % 512) != 0)
+	{
+		rawSize++;
+	}
+	stubSectionHeader[stubFileHeader->NumberOfSections].SizeOfRawData= rawSize;
+	
+	
+	// set pointer to raw data
+	uint8_t ptrToRaw = stubSectionHeader[stubFileHeader->NumberOfSections - 1].PointerToRawData + stubSectionHeader[stubFileHeader->NumberOfSections - 1].SizeOfRawData;
+	stubSectionHeader[stubFileHeader->NumberOfSections].PointerToRawData = ptrToRaw;
+
+	printf("[D] %s\n", stubSectionHeader[stubFileHeader->NumberOfSections].Name);
+
+	
+	
+	
 
 
 	return TRUE;

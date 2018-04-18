@@ -2,7 +2,7 @@
 
 int main(int argc, char ** argv) {
 	char exe_file_path[MAX_PATH] = "C://Users/Ryan Thomas Bray/Desktop/packer/Debug/calc_pi.exe";
-	char out_file_path[MAX_PATH] = "C://Users/Ryan Thomas Bray/Desktop/packer/Debug/test123.exe";
+	char out_file_path[MAX_PATH] = "C://Users/Ryan Thomas Bray/Desktop/packer/Debug/test.exe";
 	uint8_t key[KEY_LEN] = { 'a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z','a','b','c','d','e','f' };
 
 	// Check that the correct arguments were provided to the program
@@ -53,7 +53,7 @@ int main(int argc, char ** argv) {
 	printf("[+] Opening file\n");
 	FILE * outputFilePointer;
 	outputFilePointer = fopen("test.exe", "wb");
-	
+	printf("%x\n", outputFilePointer);
 	// Write to output file
 	// TODO (complete)
 	printf("[+] Writing to file\n");
