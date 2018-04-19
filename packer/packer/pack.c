@@ -130,35 +130,40 @@ int stubAddSection( uint32_t * rsize, uint8_t * stub, int sizeOfStub, PIMAGE_DOS
 	//memcpy(stubSectionHeader[stubFileHeader->NumberOfSections].Name, ".ryan", 8);
 
 	ZeroMemory(&stubSectionHeader[stubFileHeader->NumberOfSections], sizeof(IMAGE_SECTION_HEADER));
-	CopyMemory(&stubSectionHeader[stubFileHeader->NumberOfSections].Name, ".ryan", 8);
+	CopyMemory(&stubSectionHeader[stubFileHeader->NumberOfSections].Name, ".ryanb", 8);
 
 	stubFileHeader->NumberOfSections++;
 	
 	
 
 	// set virtual size to the size of the ouptut
-	uint32_t virtSize = *rsize;
-	printf("[ddddd] %d\n", virtSize);
+	uint32_t * virtSize = rsize;
+	printf("[ddddd] %d\n", *virtSize);
 	printf("[ddddd] %d\n", *rsize);
-	while ((virtSize % 4096) != 0)
+	while ((*virtSize % 4096) != 0)
 	{
 		
-		virtSize++;
+		*virtSize = *virtSize + 1;
 	}
+	//printf("[ddddd] %d %x\n", *virtSize, *virtSize);
+	stubSectionHeader[stubFileHeader->NumberOfSections - 1].Misc.VirtualSize = *virtSize;
+	printf("[Misc.VirtualSize] %d\n", stubSectionHeader[stubFileHeader->NumberOfSections - 1].Misc.VirtualSize);
+	
 
-	printf("[ddddd] %d %x\n", virtSize, virtSize);
-	uint32_t * test = virtSize;
-	stubSectionHeader[stubFileHeader->NumberOfSections].Misc.VirtualSize = virtSize;
+	// set virtual address
+	uint32_t virtAddress = stubSectionHeader[stubFileHeader->NumberOfSections - 2].VirtualAddress + stubSectionHeader[stubFileHeader->NumberOfSections - 2].Misc.VirtualSize;
+	while ((virtAddress % 4096) != 0)
+	{
+		virtAddress++;
+	}
+	stubSectionHeader[stubFileHeader->NumberOfSections -1].VirtualAddress = virtAddress;
+	printf("[Virt address] %d\n", virtAddress);
 
 	FILE * fp;
 	fp = fopen("test.exe", "wb");
 	fwrite(stub, sizeOfStub, 1, fp);
 
 	exit(0);
-
-	// set virtual address
-	uint8_t virtAddress = stubSectionHeader[stubFileHeader->NumberOfSections - 1].VirtualAddress + stubSectionHeader[stubFileHeader->NumberOfSections - 1].Misc.VirtualSize;
-	stubSectionHeader[stubFileHeader->NumberOfSections].VirtualAddress = virtAddress;
 	
 	
 	// set size of raw data
