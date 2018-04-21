@@ -1,7 +1,4 @@
-﻿  pack.c
-c:\users\ryan thomas bray\desktop\packer\packer\pack.c(113): warning C4133: '-': incompatible types - from 'unsigned char *' to 'PIMAGE_SECTION_HEADER'
-c:\users\ryan thomas bray\desktop\packer\packer\pack.c(121): warning C4018: '>': signed/unsigned mismatch
-c:\users\ryan thomas bray\desktop\packer\packer\pack.c(179): warning C4244: 'initializing': conversion from 'unsigned long' to 'unsigned char', possible loss of data
+﻿  packer.c
   packer.vcxproj -> C:\Users\Ryan Thomas Bray\Desktop\packer\Debug\packer.exe
   
   
@@ -17,13 +14,13 @@ c:\users\ryan thomas bray\desktop\packer\packer\pack.c(179): warning C4244: 'ini
   	[+] Buffer size is now 5088 bytes
   	[+] Encryption Finished
   [+] Encryption complete
-  [D] 8
-  [D] .reloc
-  [Section Align] 4096
-  [File Align] 512
-  [D] 1f000 594 
-  [D] 1f594
-  [ddddd] 5088
-  [ddddd] 5088
-  [Misc.VirtualSize] 8192
-  [Virt address] 131072
+  [Misc.VirtualSize] 2000
+  [Virt address] 20000
+  [SizeOfRawData] 2000
+  [Pointer-to-raw-data] ac00
+  [+] Packing complete
+  [+] Packing complete[+] Opening file
+  [+] Writing to file
+  [D] File size: 8192
+  [+] Closing file
+  [+] Freeing memory and leaving packer

@@ -47,19 +47,23 @@ int main(int argc, char ** argv) {
 
 	//pack(uint8_t * input, uint8_t ** output, uint8_t * key, uint32_t * rsize, uint32_t insize)
 	pack(inputFileBuffer, &outputBuffer, key, &outputSize , inputFileLength);
+	printf("[+] Packing complete");
 
 	// Create output path
 	// TODO (complete)
 	printf("[+] Opening file\n");
 	FILE * outputFilePointer;
 	outputFilePointer = fopen("test.exe", "wb");
-	printf("%x\n", outputFilePointer);
+	//printf("%x\n", outputFilePointer);
+
+
 	// Write to output file
 	// TODO (complete)
 	printf("[+] Writing to file\n");
-	printf("File size: %d\n", outputSize);
+	printf("[D] File size: %d\n", outputSize);
 	fwrite(outputBuffer, outputSize, 1 , outputFilePointer);
 	
+
 	// Close output file 
 	// TODO (complete)
 	printf("[+] Closing file\n");
