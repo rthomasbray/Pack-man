@@ -1,8 +1,12 @@
 ﻿  pack.c
-c:\users\ryan thomas bray\desktop\packer\packer\pack.c(115): warning C4133: '-': incompatible types - from 'unsigned char *' to 'PIMAGE_SECTION_HEADER'
-c:\users\ryan thomas bray\desktop\packer\packer\pack.c(123): warning C4018: '>': signed/unsigned mismatch
-  packer.c
-  Generating Code...
+c:\users\ryan thomas bray\desktop\packer\packer\pack.c(45): warning C4477: 'printf' : format string '%x' requires an argument of type 'unsigned int', but variadic argument 1 has type 'unsigned char *'
+c:\users\ryan thomas bray\desktop\packer\packer\pack.c(46): warning C4477: 'printf' : format string '%x' requires an argument of type 'unsigned int', but variadic argument 1 has type 'unsigned char *'
+c:\users\ryan thomas bray\desktop\packer\packer\pack.c(47): warning C4477: 'printf' : format string '%x' requires an argument of type 'unsigned int', but variadic argument 1 has type 'unsigned char *'
+c:\users\ryan thomas bray\desktop\packer\packer\pack.c(48): warning C4477: 'printf' : format string '%x' requires an argument of type 'unsigned int', but variadic argument 1 has type 'unsigned char *'
+c:\users\ryan thomas bray\desktop\packer\packer\pack.c(128): warning C4133: '-': incompatible types - from 'unsigned char *' to 'PIMAGE_SECTION_HEADER'
+c:\users\ryan thomas bray\desktop\packer\packer\pack.c(138): warning C4018: '>': signed/unsigned mismatch
+c:\users\ryan thomas bray\desktop\packer\packer\pack.c(208): warning C4018: '<': signed/unsigned mismatch
+c:\users\ryan thomas bray\desktop\packer\packer\pack.c(234): warning C4018: '<': signed/unsigned mismatch
   packer.vcxproj -> C:\Users\Ryan Thomas Bray\Desktop\packer\Debug\packer.exe
   
   
@@ -18,17 +22,26 @@ c:\users\ryan thomas bray\desktop\packer\packer\pack.c(123): warning C4018: '>':
   	[+] Buffer size is now 5088 bytes
   	[+] Encryption Finished
   [+] Encryption complete
-  [+] Adding section
+  BYTE 0: a33608BYTE 1: ccccccccBYTE 2: ccccccccBYTE 3: a2a038[+] Adding section
   	[Misc.VirtualSize] 2000
   	[Virt address] 20000
-  	[SizeOfRawData] 2000
+  	[SizeOfRawData] 1400
   	[Pointer-to-raw-data] ac00
+  	[+] Attempting to alter pointer to buffer
+  		[Name of section] .rdata
+  		[Pointer to .rdata] 6c00
+  		[Size of the .data raw data section] 2400
+  		[FINDME] 418d98
+  	[Debug] Searching for legit pointer
+  		[Name of section] .text
+  		[Pointer to raw data of .text] 400
+  		[Raw data size of .text ] 6800
   [+] Section added
-  [debug] final rsize = 2000
+  [debug] final rsize = 1400
   [debug] stubsize = ac00
   [+] Packing complete
   [+] Opening file
   [+] Writing to file
-  [D] File size: 52224
+  [D] File size: 49152
   [+] Closing file
   [+] Freeing memory and leaving packer

@@ -1,18 +1,43 @@
 #include "main.h"
 
+uint8_t * patch = "5150";
+
 int main() {
-	printf("Hello World from the stub2\n"); // To mark the start
-	//printf("Hello World from the stub\n"); // To mark the start
+	// To mark the start
+	printf("Hello World from the stub2\n"); 
+	uint32_t * findMe = &patch;
+	printf("[FINDME]: %x", findMe[0]);
+	printf("[FINDME]: %x", findMe[1]);
+	printf("[FINDME]: %x", findMe[2]);
+	printf("[FINDME]: %x", findMe[3]);
 
 
+	/*
 	// Create pointer that the packer will update to point to the new data
+	uint8_t * packerPointer = NULL;
+	uint8_t * buffer;
+	uint32_t bufferSize;
+
+	//Same key as in packer
+	uint8_t key[KEY_LEN] = { 'a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z','a','b','c','d','e','f' };
 
 	// Decrypt the data - See function below
+	printf("[+] Decrypting");
+	decrypt(buffer, bufferSize, key);
+	printf("[+] Decrypting complete");
 
 	// Decompress the data - see function below
+	printf("[+] Decompressing");
+	decompress(buffer, bufferSize);
+	printf("[+] Decompression complete");
+
 
 	// Pass data into loader function
-	
+	printf("[+] Passing to loader");
+	loader(buffer);
+	printf("[+] Loading complete");
+
+	*/
 
 	return TRUE;
 

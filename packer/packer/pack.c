@@ -11,6 +11,7 @@ int sizeOfStub = sizeof(stub);
 
 
 int pack(uint8_t * input, uint8_t ** output, uint8_t * key, uint32_t * rsize, uint32_t insize) {
+	
 
 	printf("[+] Packing\n");
 
@@ -41,6 +42,11 @@ int pack(uint8_t * input, uint8_t ** output, uint8_t * key, uint32_t * rsize, ui
 	// Extract / Manipulate stub PE data as needed
 	// TODO (maybe complete)
 
+	printf("BYTE 0: %x", output[0]);
+	printf("BYTE 1: %x", output[1]);
+	printf("BYTE 2: %x", output[2]);
+	printf("BYTE 3: %x", output[3]);
+
 	//stub dos header
 	PIMAGE_DOS_HEADER stubDosHeader = (PIMAGE_DOS_HEADER)stub;
 
@@ -48,6 +54,7 @@ int pack(uint8_t * input, uint8_t ** output, uint8_t * key, uint32_t * rsize, ui
 	// give the packed data as arguments
 	// TODO (maybe complete)
 	printf("[+] Adding section\n");
+	uint32_t realSize = *rsize;
 	stubAddSection(rsize, stub, sizeOfStub, stubDosHeader);
 	printf("[+] Section added\n");
 
@@ -55,14 +62,16 @@ int pack(uint8_t * input, uint8_t ** output, uint8_t * key, uint32_t * rsize, ui
 	//TODO (maybe complete)
 	printf("[debug] final rsize = %x\n", *rsize); 
 	printf("[debug] stubsize = %x\n", sizeOfStub);
+	
 
 	//calculate final size, init buffer to final size
 	uint32_t finSize = sizeOfStub + *rsize;
-	uint8_t * fin = (uint8_t *)malloc(finSize);
+	uint8_t * fin = (uint8_t *)calloc(1, finSize);
 
 	//copy the stub then compressed+encrypt file to buffer
+
 	memcpy(fin, stub, sizeOfStub);
-	memcpy(fin + sizeOfStub, *output, *rsize);
+	memcpy(fin + sizeOfStub, *output, realSize);
 
 	//set buffer and rsize to the final buffer and finsize respectively
 	free(*output);
@@ -132,7 +141,6 @@ int stubAddSection( uint32_t * rsize, uint8_t * stub, int sizeOfStub, PIMAGE_DOS
 		exit(1);
 	}
 
-
 	// (0) set the name of the section (.ryanb)
 	ZeroMemory(&stubSectionHeader[stubFileHeader->NumberOfSections], sizeof(IMAGE_SECTION_HEADER));
 	CopyMemory(&stubSectionHeader[stubFileHeader->NumberOfSections].Name, ".ryanb", 8);
@@ -141,12 +149,12 @@ int stubAddSection( uint32_t * rsize, uint8_t * stub, int sizeOfStub, PIMAGE_DOS
 	stubFileHeader->NumberOfSections++;
 
 	// (1) set virtual size to the size of the ouptut
-	uint32_t * virtSize = rsize;
-	while ((*virtSize % 4096) != 0)
+	uint32_t virtSize = *rsize;
+	while ((virtSize % 4096) != 0)
 	{
-		*virtSize = *virtSize + 1;
+		virtSize = virtSize + 1;
 	}
-	stubSectionHeader[stubFileHeader->NumberOfSections - 1].Misc.VirtualSize = *virtSize;
+	stubSectionHeader[stubFileHeader->NumberOfSections - 1].Misc.VirtualSize = virtSize;
 	printf("\t[Misc.VirtualSize] %x\n", stubSectionHeader[stubFileHeader->NumberOfSections - 1].Misc.VirtualSize);
 	
 
@@ -161,13 +169,14 @@ int stubAddSection( uint32_t * rsize, uint8_t * stub, int sizeOfStub, PIMAGE_DOS
 	
 	
 	// (3) set size of raw data
-	uint32_t * rawSize = rsize;
-	while ((*rawSize % 512) != 0)
+	uint32_t rawSize = *rsize;
+	while ((rawSize % 512) != 0)
 	{
-		*rawSize = *rawSize + 1;
+		rawSize = rawSize + 1;
 	}
-	stubSectionHeader[stubFileHeader->NumberOfSections - 1].SizeOfRawData= *rawSize;
+	stubSectionHeader[stubFileHeader->NumberOfSections - 1].SizeOfRawData= rawSize;
 	printf("\t[SizeOfRawData] %x\n", stubSectionHeader[stubFileHeader->NumberOfSections - 1].SizeOfRawData);
+	*rsize = rawSize;
 
 
 	// (4) set pointer to raw data
@@ -179,7 +188,67 @@ int stubAddSection( uint32_t * rsize, uint8_t * stub, int sizeOfStub, PIMAGE_DOS
 	stubSectionHeader[stubFileHeader->NumberOfSections - 1].Characteristics = 0xE00000E0;
 
 	// (6) setting the new size of image
-	stubOptionalHeader->SizeOfImage = *rsize + sizeOfStub;
+	stubOptionalHeader->SizeOfImage = rawSize + stubOptionalHeader->SizeOfImage;
+
+	// (7) getting pointer to buffer to be used in stub
+	
+	uint32_t findMe = 0;
+	printf("\t[+] Attempting to alter pointer to buffer\n");
+	for(int i = 0; i < stubFileHeader->NumberOfSections; i++)
+	{
+		if (strcmp(stubSectionHeader[stubFileHeader->NumberOfSections - i].Name	,".rdata") == 0)
+		{
+			printf("\t\t[Name of section] %s\n", stubSectionHeader[stubFileHeader->NumberOfSections - i].Name);
+			uint32_t dataSectionPTRD = stubSectionHeader[stubFileHeader->NumberOfSections - i].PointerToRawData;
+			printf("\t\t[Pointer to .rdata] %x\n", dataSectionPTRD);
+
+			uint8_t temp[4] = {0};
+
+			printf("\t\t[Size of the .data raw data section] %x\n", stubSectionHeader[stubFileHeader->NumberOfSections - i].SizeOfRawData);
+			for (int x = 0; x < stubSectionHeader[stubFileHeader->NumberOfSections - i].SizeOfRawData; x++)
+			{
+				memcpy(temp, stub + dataSectionPTRD, 4);
+				if (strncmp(temp, "5150",4) == 0)
+				{
+					findMe = x + stubSectionHeader[stubFileHeader->NumberOfSections - i].VirtualAddress + stubOptionalHeader->ImageBase;
+					printf("\t\t[FINDME] %x\n", findMe);
+					
+				}
+				dataSectionPTRD++;
+			}
+		}
+	}
+	
+	printf("\t[Debug] Searching for legit pointer\n");
+	for (int i = 0; i < stubFileHeader->NumberOfSections; i++)
+	{
+		if (strcmp(stubSectionHeader[stubFileHeader->NumberOfSections - i].Name, ".text") == 0)
+		{
+			printf("\t\t[Name of section] %s\n", stubSectionHeader[stubFileHeader->NumberOfSections - i].Name);
+			uint32_t textSectionPTRD = stubSectionHeader[stubFileHeader->NumberOfSections - i].PointerToRawData;
+			printf("\t\t[Pointer to raw data of .text] %x\n", textSectionPTRD);
+
+			uint8_t temp[4] = {0};
+
+			printf("\t\t[Raw data size of .text ] %x\n", stubSectionHeader[stubFileHeader->NumberOfSections - i].SizeOfRawData);
+			for (int x = 0; x < stubSectionHeader[stubFileHeader->NumberOfSections - i].SizeOfRawData; x++)
+			{
+				//printf("%x\n", x);
+				memcpy(temp, stub + textSectionPTRD, 4);
+				//printf("%x\n", stub + textSectionPTRD);
+				//printf("temp: %x\n", *temp);
+				if (*temp == findMe)
+				{
+					printf("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+				}
+				textSectionPTRD++;
+			}
+
+		}
+
+	}
+
+	
 
 	return TRUE;
 }

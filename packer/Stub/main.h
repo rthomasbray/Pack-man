@@ -10,7 +10,7 @@
 #include <compressapi.h>
 #include "loader.h"
 
-
+#define KEY_LEN 32
 /*
 Description: 
 The decompress function takes in a double pointer to a buffer containing compressed data
