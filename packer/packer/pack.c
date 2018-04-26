@@ -42,10 +42,10 @@ int pack(uint8_t * input, uint8_t ** output, uint8_t * key, uint32_t * rsize, ui
 	// Extract / Manipulate stub PE data as needed
 	// TODO (maybe complete)
 
-	printf("BYTE 0: %x", output[0]);
-	printf("BYTE 1: %x", output[1]);
-	printf("BYTE 2: %x", output[2]);
-	printf("BYTE 3: %x", output[3]);
+	printf("BYTE 0: %x\n", (*output)[0]);
+	printf("BYTE 1: %x\n", (*output)[1]);
+	printf("BYTE 2: %x\n", (*output)[2]);
+	printf("BYTE 3: %x\n", (*output)[3]);
 
 	//stub dos header
 	PIMAGE_DOS_HEADER stubDosHeader = (PIMAGE_DOS_HEADER)stub;
@@ -196,58 +196,49 @@ int stubAddSection( uint32_t * rsize, uint8_t * stub, int sizeOfStub, PIMAGE_DOS
 	printf("\t[+] Attempting to alter pointer to buffer\n");
 	for(int i = 0; i < stubFileHeader->NumberOfSections; i++)
 	{
-		if (strcmp(stubSectionHeader[stubFileHeader->NumberOfSections - i].Name	,".rdata") == 0)
+		if (strcmp(stubSectionHeader[stubFileHeader->NumberOfSections - i].Name	,".data") == 0)
 		{
 			printf("\t\t[Name of section] %s\n", stubSectionHeader[stubFileHeader->NumberOfSections - i].Name);
-			uint32_t dataSectionPTRD = stubSectionHeader[stubFileHeader->NumberOfSections - i].PointerToRawData;
-			printf("\t\t[Pointer to .rdata] %x\n", dataSectionPTRD);
-
-			uint8_t temp[4] = {0};
-
+			printf("\t\t[Pointer to .data] %x\n", stubSectionHeader[stubFileHeader->NumberOfSections - i].PointerToRawData);
 			printf("\t\t[Size of the .data raw data section] %x\n", stubSectionHeader[stubFileHeader->NumberOfSections - i].SizeOfRawData);
+
 			for (int x = 0; x < stubSectionHeader[stubFileHeader->NumberOfSections - i].SizeOfRawData; x++)
 			{
-				memcpy(temp, stub + dataSectionPTRD, 4);
-				if (strncmp(temp, "5150",4) == 0)
+				if ((*(uint32_t *)(stub + stubSectionHeader[stubFileHeader->NumberOfSections - i].PointerToRawData + x)) == 0x31323334)
 				{
 					findMe = x + stubSectionHeader[stubFileHeader->NumberOfSections - i].VirtualAddress + stubOptionalHeader->ImageBase;
-					printf("\t\t[FINDME] %x\n", findMe);
-					
+					printf("\t\t[FINDME VA] %x\n", findMe);
+					printf("\t\t[FINDME RAW] %x\n", x + stubSectionHeader[stubFileHeader->NumberOfSections - i].PointerToRawData);
 				}
-				dataSectionPTRD++;
 			}
 		}
 	}
 	
+
 	printf("\t[Debug] Searching for legit pointer\n");
 	for (int i = 0; i < stubFileHeader->NumberOfSections; i++)
 	{
 		if (strcmp(stubSectionHeader[stubFileHeader->NumberOfSections - i].Name, ".text") == 0)
 		{
 			printf("\t\t[Name of section] %s\n", stubSectionHeader[stubFileHeader->NumberOfSections - i].Name);
-			uint32_t textSectionPTRD = stubSectionHeader[stubFileHeader->NumberOfSections - i].PointerToRawData;
-			printf("\t\t[Pointer to raw data of .text] %x\n", textSectionPTRD);
-
-			uint8_t temp[4] = {0};
-
+			printf("\t\t[Pointer to raw data of .text] %x\n", stubSectionHeader[stubFileHeader->NumberOfSections - i].PointerToRawData);
 			printf("\t\t[Raw data size of .text ] %x\n", stubSectionHeader[stubFileHeader->NumberOfSections - i].SizeOfRawData);
+
 			for (int x = 0; x < stubSectionHeader[stubFileHeader->NumberOfSections - i].SizeOfRawData; x++)
 			{
-				//printf("%x\n", x);
-				memcpy(temp, stub + textSectionPTRD, 4);
-				//printf("%x\n", stub + textSectionPTRD);
-				//printf("temp: %x\n", *temp);
-				if (*temp == findMe)
+				if ((*(uint32_t *)(stub + stubSectionHeader[stubFileHeader->NumberOfSections - i].PointerToRawData + x)) == findMe)
 				{
-					printf("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+					printf("\t[+] found pointer to 0x31323334\n");
+					printf("\t\t[raw offset to 0x31323334 ] %x\n",x + 0x400);
+					printf("\t\t[virtual offset where 0x31323334 number is] %x \n", (*(uint32_t *)(stub + stubSectionHeader[stubFileHeader->NumberOfSections - i].PointerToRawData + x)));
+					printf("\t\t[.ryanb section virtual address] %x \n", (stubSectionHeader[stubFileHeader->NumberOfSections - 1].VirtualAddress) + stubOptionalHeader->ImageBase);
+					(*(uint32_t *)(stub + stubSectionHeader[stubFileHeader->NumberOfSections - i].PointerToRawData + x)) = 0x00420000;
+					printf("\t\t[.ryanb VA swapped for 0x31323334 VA] %x \n", (*(uint32_t *)(stub + stubSectionHeader[stubFileHeader->NumberOfSections - i].PointerToRawData + x)));
 				}
-				textSectionPTRD++;
 			}
-
 		}
-
 	}
-
+	
 	
 
 	return TRUE;

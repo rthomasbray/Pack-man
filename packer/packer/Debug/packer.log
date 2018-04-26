@@ -1,12 +1,8 @@
 ﻿  pack.c
-c:\users\ryan thomas bray\desktop\packer\packer\pack.c(45): warning C4477: 'printf' : format string '%x' requires an argument of type 'unsigned int', but variadic argument 1 has type 'unsigned char *'
-c:\users\ryan thomas bray\desktop\packer\packer\pack.c(46): warning C4477: 'printf' : format string '%x' requires an argument of type 'unsigned int', but variadic argument 1 has type 'unsigned char *'
-c:\users\ryan thomas bray\desktop\packer\packer\pack.c(47): warning C4477: 'printf' : format string '%x' requires an argument of type 'unsigned int', but variadic argument 1 has type 'unsigned char *'
-c:\users\ryan thomas bray\desktop\packer\packer\pack.c(48): warning C4477: 'printf' : format string '%x' requires an argument of type 'unsigned int', but variadic argument 1 has type 'unsigned char *'
 c:\users\ryan thomas bray\desktop\packer\packer\pack.c(128): warning C4133: '-': incompatible types - from 'unsigned char *' to 'PIMAGE_SECTION_HEADER'
 c:\users\ryan thomas bray\desktop\packer\packer\pack.c(138): warning C4018: '>': signed/unsigned mismatch
-c:\users\ryan thomas bray\desktop\packer\packer\pack.c(208): warning C4018: '<': signed/unsigned mismatch
-c:\users\ryan thomas bray\desktop\packer\packer\pack.c(234): warning C4018: '<': signed/unsigned mismatch
+c:\users\ryan thomas bray\desktop\packer\packer\pack.c(205): warning C4018: '<': signed/unsigned mismatch
+c:\users\ryan thomas bray\desktop\packer\packer\pack.c(227): warning C4018: '<': signed/unsigned mismatch
   packer.vcxproj -> C:\Users\Ryan Thomas Bray\Desktop\packer\Debug\packer.exe
   
   
@@ -22,20 +18,35 @@ c:\users\ryan thomas bray\desktop\packer\packer\pack.c(234): warning C4018: '<':
   	[+] Buffer size is now 5088 bytes
   	[+] Encryption Finished
   [+] Encryption complete
-  BYTE 0: a33608BYTE 1: ccccccccBYTE 2: ccccccccBYTE 3: a2a038[+] Adding section
+  BYTE 0: be
+  BYTE 1: 55
+  BYTE 2: bc
+  BYTE 3: 7d
+  [+] Adding section
   	[Misc.VirtualSize] 2000
   	[Virt address] 20000
   	[SizeOfRawData] 1400
   	[Pointer-to-raw-data] ac00
   	[+] Attempting to alter pointer to buffer
-  		[Name of section] .rdata
-  		[Pointer to .rdata] 6c00
-  		[Size of the .data raw data section] 2400
-  		[FINDME] 418d98
+  		[Name of section] .data
+  		[Pointer to .data] 9000
+  		[Size of the .data raw data section] 200
+  		[FINDME VA] 41b000
+  		[FINDME RAW] 9000
   	[Debug] Searching for legit pointer
   		[Name of section] .text
   		[Pointer to raw data of .text] 400
   		[Raw data size of .text ] 6800
+  	[+] found pointer to 0x31323334
+  		[raw offset to 0x31323334 ] 224e
+  		[virtual offset where 0x31323334 number is] 41b000 
+  		[.ryanb section virtual address] 420000 
+  		[.ryanb VA swapped for 0x31323334 VA] 420000 
+  	[+] found pointer to 0x31323334
+  		[raw offset to 0x31323334 ] 2253
+  		[virtual offset where 0x31323334 number is] 41b000 
+  		[.ryanb section virtual address] 420000 
+  		[.ryanb VA swapped for 0x31323334 VA] 420000 
   [+] Section added
   [debug] final rsize = 1400
   [debug] stubsize = ac00

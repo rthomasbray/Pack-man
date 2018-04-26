@@ -1,18 +1,16 @@
 #include "main.h"
 
-uint8_t * patch = "5150";
+uint32_t * flag = 0x31323334;
 
 int main() {
 	// To mark the start
 	printf("Hello World from the stub2\n"); 
-	uint32_t * findMe = &patch;
-	printf("[FINDME]: %x", findMe[0]);
-	printf("[FINDME]: %x", findMe[1]);
-	printf("[FINDME]: %x", findMe[2]);
-	printf("[FINDME]: %x", findMe[3]);
+	
+	uint8_t * buffer =(uint8_t *)&flag;
 
-
+	
 	/*
+	
 	// Create pointer that the packer will update to point to the new data
 	uint8_t * packerPointer = NULL;
 	uint8_t * buffer;
