@@ -25,12 +25,13 @@ int pack(uint8_t * input, uint8_t ** output, uint8_t * key, uint32_t * rsize, ui
 	}
 	printf("[+] Header correct\n");
 
-
 	//Compress The input data
 	// TODO (complete)
 	printf("[+] Attempting to compress\n");
 	inCompress(input, insize, output, rsize);
 	printf("[+] Compression complete\n");
+
+	
 
 	// Encrypt the compressed data
 	// TODO (complete)
@@ -44,8 +45,8 @@ int pack(uint8_t * input, uint8_t ** output, uint8_t * key, uint32_t * rsize, ui
 
 	printf("BYTE 0: %x\n", (*output)[0]);
 	printf("BYTE 1: %x\n", (*output)[1]);
-	printf("BYTE 2: %x\n", (*output)[2]);
-	printf("BYTE 3: %x\n", (*output)[3]);
+	printf("BYTE 2: %x\n", (*output)[5086]);
+	printf("BYTE 3: %x\n", (*output)[5087]);
 
 	//stub dos header
 	PIMAGE_DOS_HEADER stubDosHeader = (PIMAGE_DOS_HEADER)stub;

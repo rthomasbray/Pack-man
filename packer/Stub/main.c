@@ -1,41 +1,46 @@
 #include "main.h"
 
-uint32_t * flag = 0x31323334;
+uint32_t flag = 0x31323334;
 
 int main() {
 	// To mark the start
 	printf("Hello World from the stub2\n"); 
 	
 	uint8_t * buffer =(uint8_t *)&flag;
-
-	
-	/*
-	
-	// Create pointer that the packer will update to point to the new data
-	uint8_t * packerPointer = NULL;
-	uint8_t * buffer;
-	uint32_t bufferSize;
+	uint32_t bufferSize = 5088;
+	printf("[E&C TEST BYTE] %x\n", *(buffer));
+	printf("[E&C TEST BYTE] %x\n", *(buffer + 1));
+	printf("[E&C TEST BYTE] %x\n", *(buffer+5086));
+	printf("[E&C TEST BYTE] %x\n", *(buffer+5087));
 
 	//Same key as in packer
 	uint8_t key[KEY_LEN] = { 'a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z','a','b','c','d','e','f' };
 
 	// Decrypt the data - See function below
-	printf("[+] Decrypting");
-	decrypt(buffer, bufferSize, key);
-	printf("[+] Decrypting complete");
+	printf("[+] Decrypting\n");
+	decrypt(&buffer, &bufferSize, key);
+	printf("[+] Decrypting complete\n");
+
+	printf("[FIN TEST BYTE] %x\n", *(buffer));
+	printf("[FIN TEST BYTE] %x\n", *(buffer + 1));
+	printf("[FIN TEST BYTE] %x\n", *(buffer + 2));
 
 	// Decompress the data - see function below
-	printf("[+] Decompressing");
-	decompress(buffer, bufferSize);
-	printf("[+] Decompression complete");
+	printf("[+] Decompressing\n");
+	decompress(&buffer, &bufferSize);
+	printf("[+] Decompression complete\n");
 
+	printf("[f TEST BYTE] %x\n", *(buffer));
+	printf("[f TEST BYTE] %x\n", *(buffer + 1));
+	printf("[f TEST BYTE] %x\n", *(buffer + 2));
+	printf("[f TEST BYTE] %x\n", *(buffer + 3));
 
 	// Pass data into loader function
-	printf("[+] Passing to loader");
-	loader(buffer);
-	printf("[+] Loading complete");
+	printf("[+] Passing to loader\n");
+	loader(buffer, bufferSize);
+	printf("[+] Loading complete\n");
 
-	*/
+	
 
 	return TRUE;
 
@@ -81,12 +86,13 @@ int decompress(uint8_t ** buffer,uint32_t * size) {
 	{
 		printf("[-] Cannot decompress data: %d.\n", GetLastError());
 		free(*buffer);
-		return FALSE;
+		exit(0);
 	}
 
 	printf("\t[+] Decompressed Size:%d\n", DecompressedDataSize);
 
-	free(*buffer);
+	//did not use malloc or calloc so this is no longer needed
+	//free(*buffer);
 
 	*buffer = DecompressedBuffer;
 	*size = DecompressedBufferSize;
@@ -118,8 +124,9 @@ int decrypt(uint8_t ** buffer, int * rsize, uint8_t * key) {
 	*rsize = *rsize - padCount;
 	printf("\t[+] New Size %d bytes\n", *rsize);
 
-
-	*buffer = realloc(*buffer, *rsize);
+	//did not use malloc or calloc so this is no longer needed
+	//*buffer = realloc(*buffer, *rsize);
+	//*buffer = realloc(*buffer, *rsize);
 
 	printf("\t[+] Decryption Finished\n");
 

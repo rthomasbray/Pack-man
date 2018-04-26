@@ -1,8 +1,8 @@
 ﻿  pack.c
-c:\users\ryan thomas bray\desktop\packer\packer\pack.c(128): warning C4133: '-': incompatible types - from 'unsigned char *' to 'PIMAGE_SECTION_HEADER'
-c:\users\ryan thomas bray\desktop\packer\packer\pack.c(138): warning C4018: '>': signed/unsigned mismatch
-c:\users\ryan thomas bray\desktop\packer\packer\pack.c(205): warning C4018: '<': signed/unsigned mismatch
-c:\users\ryan thomas bray\desktop\packer\packer\pack.c(227): warning C4018: '<': signed/unsigned mismatch
+c:\users\ryan thomas bray\desktop\packer\packer\pack.c(129): warning C4133: '-': incompatible types - from 'unsigned char *' to 'PIMAGE_SECTION_HEADER'
+c:\users\ryan thomas bray\desktop\packer\packer\pack.c(139): warning C4018: '>': signed/unsigned mismatch
+c:\users\ryan thomas bray\desktop\packer\packer\pack.c(206): warning C4018: '<': signed/unsigned mismatch
+c:\users\ryan thomas bray\desktop\packer\packer\pack.c(228): warning C4018: '<': signed/unsigned mismatch
   packer.vcxproj -> C:\Users\Ryan Thomas Bray\Desktop\packer\Debug\packer.exe
   
   
@@ -20,39 +20,34 @@ c:\users\ryan thomas bray\desktop\packer\packer\pack.c(227): warning C4018: '<':
   [+] Encryption complete
   BYTE 0: be
   BYTE 1: 55
-  BYTE 2: bc
-  BYTE 3: 7d
+  BYTE 2: 46
+  BYTE 3: 14
   [+] Adding section
   	[Misc.VirtualSize] 2000
   	[Virt address] 20000
   	[SizeOfRawData] 1400
-  	[Pointer-to-raw-data] ac00
+  	[Pointer-to-raw-data] b200
   	[+] Attempting to alter pointer to buffer
   		[Name of section] .data
-  		[Pointer to .data] 9000
+  		[Pointer to .data] 9600
   		[Size of the .data raw data section] 200
   		[FINDME VA] 41b000
-  		[FINDME RAW] 9000
+  		[FINDME RAW] 9600
   	[Debug] Searching for legit pointer
   		[Name of section] .text
   		[Pointer to raw data of .text] 400
-  		[Raw data size of .text ] 6800
+  		[Raw data size of .text ] 6c00
   	[+] found pointer to 0x31323334
-  		[raw offset to 0x31323334 ] 224e
-  		[virtual offset where 0x31323334 number is] 41b000 
-  		[.ryanb section virtual address] 420000 
-  		[.ryanb VA swapped for 0x31323334 VA] 420000 
-  	[+] found pointer to 0x31323334
-  		[raw offset to 0x31323334 ] 2253
+  		[raw offset to 0x31323334 ] 23a8
   		[virtual offset where 0x31323334 number is] 41b000 
   		[.ryanb section virtual address] 420000 
   		[.ryanb VA swapped for 0x31323334 VA] 420000 
   [+] Section added
   [debug] final rsize = 1400
-  [debug] stubsize = ac00
+  [debug] stubsize = b200
   [+] Packing complete
   [+] Opening file
   [+] Writing to file
-  [D] File size: 49152
+  [D] File size: 50688
   [+] Closing file
   [+] Freeing memory and leaving packer
