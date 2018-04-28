@@ -1,7 +1,8 @@
 ﻿  loader.c
 c:\users\ryan thomas bray\desktop\packer\stub\loader.c(5): warning C4029: declared formal parameter list different from definition
-c:\users\ryan thomas bray\desktop\packer\stub\loader.c(15): warning C4013: 'printf' undefined; assuming extern returning int
-c:\users\ryan thomas bray\desktop\packer\stub\loader.c(23): warning C4022: 'VirtualAlloc': pointer mismatch for actual parameter 1
+c:\users\ryan thomas bray\desktop\packer\stub\loader.c(16): warning C4013: 'printf' undefined; assuming extern returning int
+c:\users\ryan thomas bray\desktop\packer\stub\loader.c(24): warning C4022: 'VirtualAlloc': pointer mismatch for actual parameter 1
 c:\users\ryan thomas bray\desktop\packer\stub\loader.c(45): warning C4047: '=': 'uint8_t *' differs in levels of indirection from 'uint64_t'
+c:\users\ryan thomas bray\desktop\packer\stub\loader.c(114): warning C4047: 'initializing': 'DWORD' differs in levels of indirection from 'uint8_t *'
   Stub.vcxproj -> C:\Users\Ryan Thomas Bray\Desktop\packer\Debug\Stub.exe
   Build the stub header file with the bytes from the EXE

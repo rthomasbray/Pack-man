@@ -26,28 +26,28 @@ c:\users\ryan thomas bray\desktop\packer\packer\pack.c(228): warning C4018: '<':
   	[Misc.VirtualSize] 2000
   	[Virt address] 20000
   	[SizeOfRawData] 1400
-  	[Pointer-to-raw-data] b200
+  	[Pointer-to-raw-data] b800
   	[+] Attempting to alter pointer to buffer
   		[Name of section] .data
-  		[Pointer to .data] 9600
+  		[Pointer to .data] 9a00
   		[Size of the .data raw data section] 200
   		[FINDME VA] 41b000
-  		[FINDME RAW] 9600
+  		[FINDME RAW] 9a00
   	[Debug] Searching for legit pointer
   		[Name of section] .text
   		[Pointer to raw data of .text] 400
-  		[Raw data size of .text ] 6c00
+  		[Raw data size of .text ] 7000
   	[+] found pointer to 0x31323334
-  		[raw offset to 0x31323334 ] 23a8
+  		[raw offset to 0x31323334 ] 27f8
   		[virtual offset where 0x31323334 number is] 41b000 
   		[.ryanb section virtual address] 420000 
   		[.ryanb VA swapped for 0x31323334 VA] 420000 
   [+] Section added
   [debug] final rsize = 1400
-  [debug] stubsize = b200
+  [debug] stubsize = b800
   [+] Packing complete
   [+] Opening file
   [+] Writing to file
-  [D] File size: 50688
+  [D] File size: 52224
   [+] Closing file
   [+] Freeing memory and leaving packer
