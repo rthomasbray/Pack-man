@@ -33,7 +33,7 @@ int main() {
 	printf("[f TEST BYTE] %x\n", *(buffer));
 	printf("[f TEST BYTE] %x\n", *(buffer + 1));
 	printf("[f TEST BYTE] %x\n", *(buffer + 2));
-	printf("[f TEST BYTE] %x\n", *(buffer + 3));
+	printf("[f TEST BYTE] %x\n", *(buffer + 0x860));
 
 	// Pass data into loader function
 	printf("[+] Passing to loader\n");
