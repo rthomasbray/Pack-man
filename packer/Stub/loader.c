@@ -1,7 +1,7 @@
 #include "loader.h"
 
 
-int loader(uint8_t * data, uint8_t dataSize)
+int loader(uint8_t * data)
 {
 	// Get information from PE headers and Get sections from PE image
 	PIMAGE_DOS_HEADER bufferDosHeader = (PIMAGE_DOS_HEADER)data;
@@ -28,13 +28,13 @@ int loader(uint8_t * data, uint8_t dataSize)
 	// Attempt to get prefered base address. If cannot calculate offset.
 	//virtual protect will help change the memory permissions
 	printf("[+] Reserving memory for pgrm\n");
-	uint64_t offset = 0;
-	uint8_t * baseAddress = VirtualAlloc(bufferOptionalHeader->ImageBase, bufferOptionalHeader->SizeOfImage, MEM_RESERVE | MEM_COMMIT, PAGE_EXECUTE_READWRITE);
+	int32_t offset = 0;
+	uint8_t * baseAddress = VirtualAlloc((LPVOID)bufferOptionalHeader->ImageBase, bufferOptionalHeader->SizeOfImage, MEM_RESERVE | MEM_COMMIT, PAGE_EXECUTE_READWRITE);
 	if (baseAddress == NULL)
 	{
 		
 		baseAddress = VirtualAlloc(NULL, bufferOptionalHeader->SizeOfImage, MEM_RESERVE | MEM_COMMIT, PAGE_EXECUTE_READWRITE);
-		offset = bufferOptionalHeader->ImageBase - (int64_t)baseAddress;
+		offset = (uint32_t)baseAddress - bufferOptionalHeader->ImageBase;
 		printf("\t[non-standard BA] %x\n", baseAddress);
 		printf("\t[OFFSET] %x\n", offset);
 		relocFlag = 1;
@@ -44,6 +44,7 @@ int loader(uint8_t * data, uint8_t dataSize)
 	else
 	{
 		printf("\t[+] Preffered recieved\n");
+		exit(0);
 		printf("\t[standard BA recieved] %x\n", bufferOptionalHeader->ImageBase);
 	}
 
@@ -52,7 +53,7 @@ int loader(uint8_t * data, uint8_t dataSize)
 	uint8_t * currAddr = { 0 };
 	for (int i = bufferFileHeader->NumberOfSections; i > 0; i--)
 	{
-		currAddr = bufferSectionHeader[bufferFileHeader->NumberOfSections - i].VirtualAddress - offset + bufferOptionalHeader->ImageBase;
+		currAddr = (uint8_t *)(bufferSectionHeader[bufferFileHeader->NumberOfSections - i].VirtualAddress + offset + bufferOptionalHeader->ImageBase);
 		
 		printf("\t[Loaded into mem address] %x\n", currAddr);
 		CopyMemory(currAddr, data + bufferSectionHeader[bufferFileHeader->NumberOfSections - i].PointerToRawData, bufferSectionHeader[bufferFileHeader->NumberOfSections - i].SizeOfRawData);
@@ -63,55 +64,96 @@ int loader(uint8_t * data, uint8_t dataSize)
 	// Perform relocations (waiting to do this till later)
 	//in progress
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
 	if (relocFlag)
 	{
 		printf("[+] Perfroming relocations\n");
 
 		PIMAGE_BASE_RELOCATION baseRelocation = (PIMAGE_BASE_RELOCATION)(baseAddress + bufferNTHeader->OptionalHeader.DataDirectory[IMAGE_DIRECTORY_ENTRY_BASERELOC].VirtualAddress);
-		printf("here!!!!!!!!!!!!!!!!!!\n");
+		
+		printf("[size of block] %x\n", baseRelocation->SizeOfBlock); //this is correct
+		
+		printf("[theoretical entry address] %x\n", baseRelocation->VirtualAddress + bufferOptionalHeader->ImageBase);//this is correct
 
 		while (baseRelocation->SizeOfBlock)
 		{
 
-			uint8_t currentAddress = bufferOptionalHeader->ImageBase + baseRelocation->VirtualAddress;
-			uint8_t relocCount = (baseRelocation->SizeOfBlock - sizeof(IMAGE_BASE_RELOCATION)) / sizeof(PIMAGE_RELOCATION);
-			PIMAGE_RELOCATION relocation = (PIMAGE_RELOCATION)(((DWORD)baseRelocation) + sizeof(IMAGE_BASE_RELOCATION));
+			//printf("there and everywhere\n");
+			uint32_t  currentAddress = baseAddress + baseRelocation->VirtualAddress; // this needs to be offset by something else i'm just not sure what
+			DWORD relocCount = (baseRelocation->SizeOfBlock - sizeof(IMAGE_BASE_RELOCATION)) / sizeof(WORD);  //correct
+			PIMAGE_RELOCATION relocation = (PIMAGE_RELOCATION)(((DWORD)baseRelocation) + sizeof(IMAGE_BASE_RELOCATION)); //this is my problem!!
+
+			printf("[reloc count] %d\n", relocCount);
+			printf("[currentAddress] %x\n", currentAddress);
+
+			printf("\n[Relocation Reloc-count] %d\n", relocation->RelocCount);
+			printf("[Relocation symbol-table-index] %x\n", relocation->SymbolTableIndex);
+			printf("[Relocation type] %x\n", relocation->Type);
+			printf("[Relocation virtual address] %x\n\n", relocation->VirtualAddress);
+
+
 
 			while (relocCount--)
 			{
-				printf("bet we don''t get here\n");
 
 				switch (relocation->Type)
 				{
 					case IMAGE_REL_BASED_DIR64:
-						*((uint8_t *)(currentAddress + relocation->VirtualAddress)) += offset;
+						printf("bing\n");
+						*((UINT_PTR *)(currentAddress + relocation->VirtualAddress)) += offset;
+						printf("boo\n");
 						break;
 					case IMAGE_REL_BASED_HIGHLOW:
-						*((uint8_t *)(currentAddress + relocation->VirtualAddress)) +=  (uint8_t)offset;
+						printf("bang\n");
+						*((DWORD *)(currentAddress + relocation->VirtualAddress)) +=  (DWORD)offset;
+						printf("boo\n");
 						break;
 					case IMAGE_REL_BASED_HIGH:
+						printf("bong\n");
 						*((WORD*)(currentAddress + relocation->VirtualAddress)) += HIWORD(offset);
+						printf("boo\n");
 						break;
 					case IMAGE_REL_BASED_LOW:
+						printf("boom\n");
 						*((WORD*)(currentAddress + relocation->VirtualAddress)) += LOWORD(offset);
+						printf("boo\n");
 						break;
 					case IMAGE_REL_BASED_ABSOLUTE:
+						//printf("bing\n");
 						break;
 					default:
-						printf("this is a bad place to be\n");
-						printf("%x\n", relocation->Type);
+						;
 						//exit(0);
 				}
+				
 				relocation++;
+				
 			}
-			baseRelocation = (PIMAGE_BASE_RELOCATION)(((uint8_t)baseRelocation) + baseRelocation->SizeOfBlock);
+			printf("before\n");
+			baseRelocation = (PIMAGE_BASE_RELOCATION)(((DWORD)baseRelocation) + baseRelocation->SizeOfBlock);
+			printf("after\n");
 		}
 		printf("!!!!!!!!!!!!!!!!!!!1orthere!!!!!!!!!!!!!!!!!11\n");
 
 	}
 	
 
-
+	
 
 
 
@@ -140,7 +182,7 @@ int loader(uint8_t * data, uint8_t dataSize)
 		//verify name
 
 		uint8_t * currentDLLName = (uint8_t *)(baseAddress + bufferImportDescriptor->Name);
-		printf("[Current lib] %s\n", currentDLLName);
+		//printf("[Current lib] %s\n", currentDLLName);
 
 		
 	
@@ -163,12 +205,15 @@ int loader(uint8_t * data, uint8_t dataSize)
 			
 			//get current function and load thenget proc address
 			PIMAGE_IMPORT_BY_NAME importByName = (PIMAGE_IMPORT_BY_NAME)(baseAddress + currentThunk->u1.AddressOfData);
-			currentThunk->u1.AddressOfData = (uint8_t)GetProcAddress(hmod, (uint8_t *)importByName->Name);
+			currentThunk->u1.AddressOfData = (uint32_t)GetProcAddress(hmod, (uint8_t *)importByName->Name);
+			//printf("%s\n", importByName->Name);
+
 
 			//verify its load location
 			if (!currentThunk->u1.AddressOfData)
 			{
 				printf("%s", "oh no!");
+				exit(0);
 			}
 			
 			//next thunk
@@ -186,8 +231,8 @@ int loader(uint8_t * data, uint8_t dataSize)
 	//Cast entry point address to function
 	
 	//getting entry point
-	uint32_t entryPoint = baseAddress + bufferNTHeader->OptionalHeader.AddressOfEntryPoint;
-	printf("Entry point: %x\n", entryPoint);
+	uint8_t * entryPoint = baseAddress + bufferNTHeader->OptionalHeader.AddressOfEntryPoint;
+	//printf("Entry point: %x\n", entryPoint);
 	printf("%s", "[+] Attempting to execute\n");	
 
 	//casting to function and executing

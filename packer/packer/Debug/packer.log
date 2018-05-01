@@ -38,7 +38,7 @@ c:\users\ryan thomas bray\desktop\packer\packer\pack.c(228): warning C4018: '<':
   		[Pointer to raw data of .text] 400
   		[Raw data size of .text ] 7000
   	[+] found pointer to 0x31323334
-  		[raw offset to 0x31323334 ] 27f8
+  		[raw offset to 0x31323334 ] 20c8
   		[virtual offset where 0x31323334 number is] 41b000 
   		[.ryanb section virtual address] 420000 
   		[.ryanb VA swapped for 0x31323334 VA] 420000 

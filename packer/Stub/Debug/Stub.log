@@ -1,11 +1,6 @@
 ﻿  loader.c
-c:\users\ryan thomas bray\desktop\packer\stub\loader.c(5): warning C4029: declared formal parameter list different from definition
-c:\users\ryan thomas bray\desktop\packer\stub\loader.c(24): warning C4013: 'printf' undefined; assuming extern returning int
-c:\users\ryan thomas bray\desktop\packer\stub\loader.c(32): warning C4022: 'VirtualAlloc': pointer mismatch for actual parameter 1
-c:\users\ryan thomas bray\desktop\packer\stub\loader.c(55): warning C4047: '=': 'uint8_t *' differs in levels of indirection from 'uint64_t'
-c:\users\ryan thomas bray\desktop\packer\stub\loader.c(87): warning C4244: '+=': conversion from 'uint64_t' to 'uint8_t', possible loss of data
-c:\users\ryan thomas bray\desktop\packer\stub\loader.c(76): warning C4244: 'initializing': conversion from 'unsigned long' to 'uint8_t', possible loss of data
-c:\users\ryan thomas bray\desktop\packer\stub\loader.c(77): warning C4244: 'initializing': conversion from 'DWORD' to 'uint8_t', possible loss of data
-c:\users\ryan thomas bray\desktop\packer\stub\loader.c(189): warning C4047: 'initializing': 'uint32_t' differs in levels of indirection from 'uint8_t *'
+c:\users\ryan thomas bray\desktop\packer\stub\loader.c(38): warning C4477: 'printf' : format string '%x' requires an argument of type 'unsigned int', but variadic argument 1 has type 'uint8_t *'
+c:\users\ryan thomas bray\desktop\packer\stub\loader.c(58): warning C4477: 'printf' : format string '%x' requires an argument of type 'unsigned int', but variadic argument 1 has type 'uint8_t *'
+c:\users\ryan thomas bray\desktop\packer\stub\loader.c(97): warning C4047: 'initializing': 'uint32_t' differs in levels of indirection from 'uint8_t *'
   Stub.vcxproj -> C:\Users\Ryan Thomas Bray\Desktop\packer\Debug\Stub.exe
   Build the stub header file with the bytes from the EXE

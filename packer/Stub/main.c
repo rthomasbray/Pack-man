@@ -37,7 +37,7 @@ int main() {
 
 	// Pass data into loader function
 	printf("[+] Passing to loader\n");
-	loader(buffer, bufferSize);
+	loader(buffer);
 	printf("[+] Loading complete\n");
 
 	
