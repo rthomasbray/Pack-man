@@ -86,69 +86,40 @@ int loader(uint8_t * data)
 
 		PIMAGE_BASE_RELOCATION baseRelocation = (PIMAGE_BASE_RELOCATION)(baseAddress + bufferNTHeader->OptionalHeader.DataDirectory[IMAGE_DIRECTORY_ENTRY_BASERELOC].VirtualAddress);
 		
+		PIMAGE_BASE_RELOCATION baseRelocationEnd = baseRelocation + bufferNTHeader->OptionalHeader.DataDirectory[IMAGE_DIRECTORY_ENTRY_BASERELOC].Size;
+
 		printf("[size of block] %x\n", baseRelocation->SizeOfBlock); //this is correct
 		
 		printf("[theoretical entry address] %x\n", baseRelocation->VirtualAddress + bufferOptionalHeader->ImageBase);//this is correct
 
-		while (baseRelocation->SizeOfBlock)
-		{
 
 			//printf("there and everywhere\n");
 			uint32_t  currentAddress = baseAddress + baseRelocation->VirtualAddress; // this needs to be offset by something else i'm just not sure what
+
 			DWORD relocCount = (baseRelocation->SizeOfBlock - sizeof(IMAGE_BASE_RELOCATION)) / sizeof(WORD);  //correct
-			PIMAGE_RELOCATION relocation = (PIMAGE_RELOCATION)(((DWORD)baseRelocation) + sizeof(IMAGE_BASE_RELOCATION)); //this is my problem!!
-
-			printf("[reloc count] %d\n", relocCount);
-			printf("[currentAddress] %x\n", currentAddress);
-
-			printf("\n[Relocation Reloc-count] %d\n", relocation->RelocCount);
-			printf("[Relocation symbol-table-index] %x\n", relocation->SymbolTableIndex);
-			printf("[Relocation type] %x\n", relocation->Type);
-			printf("[Relocation virtual address] %x\n\n", relocation->VirtualAddress);
 
 
 
-			while (relocCount--)
+			WORD * typeOffset = baseRelocation + 1;
+
+			for (int i = 0; i < relocCount - 1; i++)
 			{
-
-				switch (relocation->Type)
+				uint8_t status = (typeOffset[i] >> 12) & 0xff;
+				uint32_t thingOffset = (typeOffset[i]) & 0xfff;
+				if (IMAGE_REL_BASED_HIGHLOW == status)
 				{
-					case IMAGE_REL_BASED_DIR64:
-						printf("bing\n");
-						*((UINT_PTR *)(currentAddress + relocation->VirtualAddress)) += offset;
-						printf("boo\n");
-						break;
-					case IMAGE_REL_BASED_HIGHLOW:
-						printf("bang\n");
-						*((DWORD *)(currentAddress + relocation->VirtualAddress)) +=  (DWORD)offset;
-						printf("boo\n");
-						break;
-					case IMAGE_REL_BASED_HIGH:
-						printf("bong\n");
-						*((WORD*)(currentAddress + relocation->VirtualAddress)) += HIWORD(offset);
-						printf("boo\n");
-						break;
-					case IMAGE_REL_BASED_LOW:
-						printf("boom\n");
-						*((WORD*)(currentAddress + relocation->VirtualAddress)) += LOWORD(offset);
-						printf("boo\n");
-						break;
-					case IMAGE_REL_BASED_ABSOLUTE:
-						//printf("bing\n");
-						break;
-					default:
-						;
-						//exit(0);
+					printf("[+] %x\n", thingOffset);
+					uint32_t * fixUpLoc = currentAddress + thingOffset;
+					*fixUpLoc = *fixUpLoc + offset;
 				}
-				
-				relocation++;
-				
+				else
+				{
+					printf("oh no!");
+					exit(0);
+				}
+					
 			}
-			printf("before\n");
-			baseRelocation = (PIMAGE_BASE_RELOCATION)(((DWORD)baseRelocation) + baseRelocation->SizeOfBlock);
-			printf("after\n");
-		}
-		printf("!!!!!!!!!!!!!!!!!!!1orthere!!!!!!!!!!!!!!!!!11\n");
+
 
 	}
 	

@@ -205,7 +205,7 @@ int stubAddSection( uint32_t * rsize, uint8_t * stub, int sizeOfStub, PIMAGE_DOS
 
 			for (int x = 0; x < stubSectionHeader[stubFileHeader->NumberOfSections - i].SizeOfRawData; x++)
 			{
-				if ((*(uint32_t *)(stub + stubSectionHeader[stubFileHeader->NumberOfSections - i].PointerToRawData + x)) == 0x31323334)
+				if ((*(uint32_t *)(stub + stubSectionHeader[stubFileHeader->NumberOfSections - i].PointerToRawData + x)) == 0x31323334) //flag = 0x31323334
 				{
 					findMe = x + stubSectionHeader[stubFileHeader->NumberOfSections - i].VirtualAddress + stubOptionalHeader->ImageBase;
 					printf("\t\t[FINDME VA] %x\n", findMe);
@@ -233,7 +233,7 @@ int stubAddSection( uint32_t * rsize, uint8_t * stub, int sizeOfStub, PIMAGE_DOS
 					printf("\t\t[raw offset to 0x31323334 ] %x\n",x + 0x400);
 					printf("\t\t[virtual offset where 0x31323334 number is] %x \n", (*(uint32_t *)(stub + stubSectionHeader[stubFileHeader->NumberOfSections - i].PointerToRawData + x)));
 					printf("\t\t[.ryanb section virtual address] %x \n", (stubSectionHeader[stubFileHeader->NumberOfSections - 1].VirtualAddress) + stubOptionalHeader->ImageBase);
-					(*(uint32_t *)(stub + stubSectionHeader[stubFileHeader->NumberOfSections - i].PointerToRawData + x)) = 0x00420000;
+					(*(uint32_t *)(stub + stubSectionHeader[stubFileHeader->NumberOfSections - i].PointerToRawData + x)) = (stubSectionHeader[stubFileHeader->NumberOfSections - 1].VirtualAddress) + stubOptionalHeader->ImageBase;
 					printf("\t\t[.ryanb VA swapped for 0x31323334 VA] %x \n", (*(uint32_t *)(stub + stubSectionHeader[stubFileHeader->NumberOfSections - i].PointerToRawData + x)));
 				}
 			}

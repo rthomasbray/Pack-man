@@ -8,6 +8,9 @@ int main() {
 	
 	uint8_t * buffer =(uint8_t *)&flag;
 	uint32_t bufferSize = 5088;
+
+	//uint8_t * newBuff = malloc(bufferSize);
+
 	printf("[E&C TEST BYTE] %x\n", *(buffer));
 	printf("[E&C TEST BYTE] %x\n", *(buffer + 1));
 	printf("[E&C TEST BYTE] %x\n", *(buffer+5086));
