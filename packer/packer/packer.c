@@ -17,13 +17,12 @@ int main(int argc, char ** argv) {
 	// Generate a key to encrypt with
 	// Lame version: just create a static key
 	// Cool version: generate a random key
-	// TODO (maybe completed)
 	// for now opting for lame;  is intialized above..
 	printf("\n\n[+] Generating key\n");
 
 	// Get the file bytes from the input file
 	// Filename is stored in exe_file_path
-	// TODO (completed)
+
 	//get file pointer
 	FILE * inputFilePointer = fopen(exe_file_path, "rb");
 	//get the end of file
@@ -41,7 +40,6 @@ int main(int argc, char ** argv) {
 	
 	// Pass key and input file bytes to the pack function
 	// Pack function is inside pack.c
-	// TODO (complete)
 	uint8_t * outputBuffer = malloc(100);
 	uint32_t outputSize = 100;
 
@@ -50,7 +48,6 @@ int main(int argc, char ** argv) {
 	printf("[+] Packing complete\n");
 
 	// Create output path
-	// TODO (complete)
 	printf("[+] Opening file\n");
 	FILE * outputFilePointer;
 	outputFilePointer = fopen("test.exe", "wb");
@@ -58,19 +55,16 @@ int main(int argc, char ** argv) {
 
 
 	// Write to output file
-	// TODO (complete)
 	printf("[+] Writing to file\n");
-	printf("[D] File size: %d\n", outputSize);
+	//printf("[D] File size: %d\n", outputSize);
 	fwrite(outputBuffer, outputSize, 1 , outputFilePointer);
 	
 
 	// Close output file 
-	// TODO (complete)
 	printf("[+] Closing file\n");
 	fclose(outputFilePointer);
 
 	// Free dynamically allocated memory
-	// TODO (complete)
 	printf("[+] Freeing memory and leaving packer\n");
 	free(inputFileBuffer);
 	free(outputBuffer);

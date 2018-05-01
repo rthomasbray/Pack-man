@@ -1,9 +1,1 @@
-﻿  loader.c
-c:\users\ryan thomas bray\desktop\packer\stub\loader.c(107): warning C4018: '<': signed/unsigned mismatch
-c:\users\ryan thomas bray\desktop\packer\stub\loader.c(38): warning C4477: 'printf' : format string '%x' requires an argument of type 'unsigned int', but variadic argument 1 has type 'uint8_t *'
-c:\users\ryan thomas bray\desktop\packer\stub\loader.c(58): warning C4477: 'printf' : format string '%x' requires an argument of type 'unsigned int', but variadic argument 1 has type 'uint8_t *'
-c:\users\ryan thomas bray\desktop\packer\stub\loader.c(99): warning C4047: 'initializing': 'uint32_t' differs in levels of indirection from 'uint8_t *'
-c:\users\ryan thomas bray\desktop\packer\stub\loader.c(105): warning C4133: 'initializing': incompatible types - from 'PIMAGE_BASE_RELOCATION' to 'WORD *'
-c:\users\ryan thomas bray\desktop\packer\stub\loader.c(114): warning C4047: 'initializing': 'uint32_t *' differs in levels of indirection from 'uint32_t'
-  Stub.vcxproj -> C:\Users\Ryan Thomas Bray\Desktop\packer\Debug\Stub.exe
-  Build the stub header file with the bytes from the EXE
+﻿
