@@ -92,6 +92,8 @@ int loader(uint8_t * data)
 		
 		printf("[theoretical entry address] %x\n", baseRelocation->VirtualAddress + bufferOptionalHeader->ImageBase);//this is correct
 
+		while (baseRelocation->SizeOfBlock)
+		{
 
 			//printf("there and everywhere\n");
 			uint32_t  currentAddress = baseAddress + baseRelocation->VirtualAddress; // this needs to be offset by something else i'm just not sure what
@@ -116,11 +118,12 @@ int loader(uint8_t * data)
 				{
 					printf("oh no!");
 					exit(0);
-				}
-					
+				}		
 			}
-
-
+			printf("before\n");
+			baseRelocation = (PIMAGE_BASE_RELOCATION)(((DWORD)baseRelocation) + baseRelocation->SizeOfBlock);
+			printf("after\n");
+		}
 	}
 	
 
