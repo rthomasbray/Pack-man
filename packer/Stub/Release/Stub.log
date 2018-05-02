@@ -1,11 +1,8 @@
-﻿  loader.c
-c:\users\ryan thomas bray\desktop\packer\stub\loader.c(93): warning C4018: '<': signed/unsigned mismatch
-c:\users\ryan thomas bray\desktop\packer\stub\loader.c(85): warning C4047: 'initializing': 'uint32_t' differs in levels of indirection from 'uint8_t *'
-c:\users\ryan thomas bray\desktop\packer\stub\loader.c(91): warning C4133: 'initializing': incompatible types - from 'PIMAGE_BASE_RELOCATION' to 'WORD *'
-c:\users\ryan thomas bray\desktop\packer\stub\loader.c(106): warning C4047: 'initializing': 'uint32_t *' differs in levels of indirection from 'uint32_t'
-  main.c
+﻿  main.c
   Generating code
-  All 18 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
   Finished generating code
+  0 of 18 functions ( 0.0%) were compiled, the rest were copied from previous compilation.
+    0 functions were new in current compilation
+    0 functions had inline decision re-evaluated but remain unchanged
   Stub.vcxproj -> C:\Users\Ryan Thomas Bray\Desktop\packer\Release\Stub.exe
   Build the stub header file with the bytes from the EXE

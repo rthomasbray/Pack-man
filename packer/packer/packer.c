@@ -8,6 +8,7 @@ int main(int argc, char ** argv) {
 	// Check that the correct arguments were provided to the program
 	// If incorrect arguments were provided then print usage statement and exit
 
+
 	
 	if (!getArgs(argc, argv, exe_file_path)) {
 		printUsage();

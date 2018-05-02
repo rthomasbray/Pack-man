@@ -7,7 +7,33 @@ int main()
 {
 	// To mark the start
 	//printf("Hello World from the stub2\n"); 
+
+
+	// first anti debug technique
+	__asm
+	{
+		push ss
+		pop  ss
+		pushfd
+		test[esp + 1], 1
+		jne  DBG_Dest
+	}
+
+
+	// second anti debug technique
+	__asm
+	{
+		xor eax, eax
+		push offset DBG_Dest
+		push fs : [eax]
+		mov fs : [eax], esp
+		call CloseHandle
+	}
 	
+
+
+
+
 	//getting pointer to .ryanb
 	uint8_t * buffer =(uint8_t *)&flag;
 	//printf("[buffer size] %d\n", bufferSize);
@@ -52,6 +78,11 @@ int main()
 	printf("[+] Loading complete\n");
 
 	return TRUE;
+
+DBG_Dest:
+	printf("Is that a debugger you have there?!");
+	exit(0);
+	return FALSE;
 
 }
 
