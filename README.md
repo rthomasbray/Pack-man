@@ -6,6 +6,8 @@
 ## Execution instructions
 To execute the program, navigate to the packer/release where the `stub.exe` and `packer.exe` files can be found.  To pack a program, use the command `packer.exe [EXE_FILE_HERE]`(i.e. `packer.exe calc_pi.exe`).  This will result in the creation of `test.exe`.  To execute the packed program, use the command `test.exe`. 
 
+Note: this packer is platform specific and only runs with portable executables (.exe) files and on Windows systems.
+
 ## Methodology
 
 ### General Overview
