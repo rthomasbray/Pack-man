@@ -8,8 +8,6 @@ int main(int argc, char ** argv) {
 	// Check that the correct arguments were provided to the program
 	// If incorrect arguments were provided then print usage statement and exit
 
-
-	
 	if (!getArgs(argc, argv, exe_file_path)) {
 		printUsage();
 		return FALSE;
@@ -69,10 +67,7 @@ int main(int argc, char ** argv) {
 	printf("[+] Freeing memory and leaving packer\n");
 	free(inputFileBuffer);
 	free(outputBuffer);
-	
-
 }
-
 
 
 // Prints the usage information for the packer

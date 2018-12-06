@@ -3,14 +3,13 @@
 // Stub insertion by post build event on stub project
 // Ignore errors here until build
 
-
 uint8_t stub[] = { 
 #include "stub.h" 
 };
 int sizeOfStub = sizeof(stub);
 
-
-int pack(uint8_t * input, uint8_t ** output, uint8_t * key, uint32_t * rsize, uint32_t insize) {
+int pack(uint8_t * input, uint8_t ** output, uint8_t * key, uint32_t * rsize, uint32_t insize) 
+{
 	
 
 	printf("[+] Packing\n");
@@ -29,7 +28,6 @@ int pack(uint8_t * input, uint8_t ** output, uint8_t * key, uint32_t * rsize, ui
 	printf("[+] Attempting to compress\n");
 	inCompress(input, insize, output, rsize);
 	printf("[+] Compression complete\n");
-
 
 	// Encrypt the compressed data
 	printf("[+] Encrypting\n");
@@ -59,13 +57,11 @@ int pack(uint8_t * input, uint8_t ** output, uint8_t * key, uint32_t * rsize, ui
 	//printf("[debug] final rsize = %x\n", *rsize); 
 	//printf("[debug] stubsize = %x\n", sizeOfStub);
 	
-
 	//calculate final size, init buffer to final size
 	uint32_t finSize = sizeOfStub + *rsize;
 	uint8_t * fin = (uint8_t *)calloc(1, finSize);
 
 	//copy the stub then compressed+encrypt file to buffer
-
 	memcpy(fin, stub, sizeOfStub);
 	memcpy(fin + sizeOfStub, *output, realSize);
 
@@ -128,8 +124,6 @@ int stubAddSection( uint32_t * rsize, uint8_t * stub, int sizeOfStub, PIMAGE_DOS
 		exit(1);
 	}
 
-
-
 	// (0) set the name of the section (.ryanb)
 	ZeroMemory(&stubSectionHeader[stubFileHeader->NumberOfSections], sizeof(IMAGE_SECTION_HEADER));
 	CopyMemory(&stubSectionHeader[stubFileHeader->NumberOfSections].Name, ".ryanb", 8);
@@ -146,7 +140,6 @@ int stubAddSection( uint32_t * rsize, uint8_t * stub, int sizeOfStub, PIMAGE_DOS
 	stubSectionHeader[stubFileHeader->NumberOfSections - 1].Misc.VirtualSize = virtSize;
 	//printf("\t[Misc.VirtualSize] %x\n", stubSectionHeader[stubFileHeader->NumberOfSections - 1].Misc.VirtualSize);
 	
-
 	// (2) set virtual address
 	uint32_t virtAddress = stubSectionHeader[stubFileHeader->NumberOfSections - 2].VirtualAddress + stubSectionHeader[stubFileHeader->NumberOfSections - 2].Misc.VirtualSize;
 	while ((virtAddress % stubOptionalHeader->SectionAlignment) != 0)
@@ -155,7 +148,6 @@ int stubAddSection( uint32_t * rsize, uint8_t * stub, int sizeOfStub, PIMAGE_DOS
 	}
 	stubSectionHeader[stubFileHeader->NumberOfSections -1].VirtualAddress = virtAddress;
 	//printf("\t[Virt address] %x\n", virtAddress);
-	
 	
 	// (3) set size of raw data
 	//printf("[file then section] %d %d\n", stubOptionalHeader->FileAlignment, stubOptionalHeader->SectionAlignment);
@@ -182,7 +174,6 @@ int stubAddSection( uint32_t * rsize, uint8_t * stub, int sizeOfStub, PIMAGE_DOS
 	stubOptionalHeader->SizeOfImage = rawSize + stubOptionalHeader->SizeOfImage;
 
 	// (7) replacing pointer to buffer with the VA of .ryanb section
-	
 	// search for flag value
 	uint32_t findMe = 0;
 	//printf("\t[+] Attempting to alter pointer to buffer\n");
@@ -247,9 +238,6 @@ int stubAddSection( uint32_t * rsize, uint8_t * stub, int sizeOfStub, PIMAGE_DOS
 			}
 		}
 	}
-	
-	
-
 	return TRUE;
 }
 
