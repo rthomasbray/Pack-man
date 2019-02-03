@@ -9,6 +9,10 @@
 
 #define KEY_LEN 32
 
+#define MAGIC_KEY 0x4e4e4e4e
+#define MAGIC_SIZE 0x69696969
+#define MAGIC_ADDR 0x31323334
+
 // Get the command line arguments
 int getArgs(int argc, char ** argv, char * path);
 

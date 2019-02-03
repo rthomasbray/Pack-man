@@ -1,7 +1,9 @@
 #include "main.h"
 
-uint32_t flag = 0x31323334;
-uint32_t bufferSize =0x69696969;
+uint32_t flag = MAGIC_ADDR;
+uint8_t key[32] = {MAGIC_KEY,MAGIC_KEY,MAGIC_KEY,MAGIC_KEY };
+uint32_t bufferSize =MAGIC_SIZE;
+
 
 int main() 
 {
@@ -42,13 +44,26 @@ int main()
 	uint8_t * newBuff = malloc(bufferSize);
 	memcpy(newBuff, buffer, bufferSize);
 
+
+	
+	//getting pointer to decryption key
+	
+	for (size_t i = 0; i < 32; i++)
+	{
+		printf("%c", key[i]);
+	}
+	printf("\n");
+	
+
+
+
 	//printf("[E&C TEST BYTE] %x\n", *(buffer));
 	//printf("[E&C TEST BYTE] %x\n", *(buffer + 1));
 	//printf("[E&C TEST BYTE] %x\n", *(buffer+5086));
 	//printf("[E&C TEST BYTE] %x\n", *(buffer+5087));
 
 	//Same key as in packer
-	uint8_t key[KEY_LEN] = { 'a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z','a','b','c','d','e','f' };
+	//uint8_t key[KEY_LEN] = { 'a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z','a','b','c','d','e','f' };
 
 	// Decrypt the data - See function below
 	printf("[+] Decrypting\n");

@@ -1,5 +1,7 @@
 #include "pack.h"
 
+
+
 // Stub insertion by post build event on stub project
 // Ignore errors here until build
 
@@ -50,8 +52,11 @@ int pack(uint8_t * input, uint8_t ** output, uint8_t * key, uint32_t * rsize, ui
 	printf("[+] Adding section\n");
 	uint32_t realSize = *rsize;
 	//printf("[realsize] %d", realSize);
-	stubAddSection(rsize, stub, sizeOfStub, stubDosHeader);
+	stubAddSection(rsize, stub, sizeOfStub, stubDosHeader, key);
 	printf("[+] Section added\n");
+
+	
+	
 
 	//makes final buffer size the size of the stub + the size of exe file
 	//printf("[debug] final rsize = %x\n", *rsize); 
@@ -70,17 +75,40 @@ int pack(uint8_t * input, uint8_t ** output, uint8_t * key, uint32_t * rsize, ui
 	*output = fin;
 	*rsize = finSize;	
 
+
+	printf("[+] Patching key\n");
+
+	patchKey(*output, *rsize, key);
+
+	printf("[+] Key Pathced\n");
+
 	return TRUE;
 }
 
-int patchKey(uint8_t * data,uint32_t size,uint8_t * key) {
-	// Add the key into the stub
-	// TODO (don't have to)
+int patchKey(uint8_t * data, uint32_t size, uint8_t * key) {
+
+
+
+	//Finally, add the key in
+	int kOffset = 0;
+	//printf("this is it: %x\n", *((uint32_t *)(&data[0])));
+	for (uint32_t i = 0; i < size; i++)
+	{
+		//printf("this is it: %x\n", *((uint32_t *)(&data[i])));
+		if (*((uint32_t *)(&data[i])) == MAGIC_KEY) {
+			kOffset = i;
+			i = size; // jump out loop.
+		}
+	}
+	for (size_t i = 0; i < KEY_LEN; i++)
+	{
+		data[kOffset + i] = key[i];
+	}
 
 	return TRUE;
 }
 
-int stubAddSection( uint32_t * rsize, uint8_t * stub, int sizeOfStub, PIMAGE_DOS_HEADER stubDosHeader) {
+int stubAddSection( uint32_t * rsize, uint8_t * stub, int sizeOfStub, PIMAGE_DOS_HEADER stubDosHeader, uint8_t * key) {
 	// Fix up the stub PE header to include the extra section
 	// add the input bytes to the end
 	// TODO (maybe complete)
@@ -187,7 +215,7 @@ int stubAddSection( uint32_t * rsize, uint8_t * stub, int sizeOfStub, PIMAGE_DOS
 
 			for (int x = 0; x < stubSectionHeader[stubFileHeader->NumberOfSections - i].SizeOfRawData; x++)
 			{
-				if ((*(uint32_t *)(stub + stubSectionHeader[stubFileHeader->NumberOfSections - i].PointerToRawData + x)) == 0x31323334) //flag = 0x31323334
+				if ((*(uint32_t *)(stub + stubSectionHeader[stubFileHeader->NumberOfSections - i].PointerToRawData + x)) == MAGIC_ADDR) //flag = 0x31323334
 				{
 					findMe = x + stubSectionHeader[stubFileHeader->NumberOfSections - i].VirtualAddress + stubOptionalHeader->ImageBase;
 					//printf("\t\t[FINDME VA] %x\n", findMe);
@@ -196,6 +224,11 @@ int stubAddSection( uint32_t * rsize, uint8_t * stub, int sizeOfStub, PIMAGE_DOS
 			}
 		}
 	}
+
+
+
+
+
 	
 	// seach for pointer to VA address, then patch
 	//printf("\t[Debug] Searching for legit pointer\n");
@@ -216,7 +249,7 @@ int stubAddSection( uint32_t * rsize, uint8_t * stub, int sizeOfStub, PIMAGE_DOS
 					//printf("\t[+] found pointer to 0x31323334\n");
 					//printf("\t\t[raw offset to 0x31323334 ] %x\n",x + 0x400);
 					//printf("\t\t[virtual offset where 0x31323334 number is] %x \n", (*(uint32_t *)(stub + stubSectionHeader[stubFileHeader->NumberOfSections - i].PointerToRawData + x)));
-					//printf("\t\t[.ryanb section virtual address] %x \n", (stubSectionHeader[stubFileHeader->NumberOfSections - 1].VirtualAddress) + stubOptionalHeader->ImageBase);
+					printf("\t\t[.ryanb section virtual address] %x \n", (stubSectionHeader[stubFileHeader->NumberOfSections - 1].VirtualAddress) + stubOptionalHeader->ImageBase);
 					(*(uint32_t *)(stub + stubSectionHeader[stubFileHeader->NumberOfSections - i].PointerToRawData + x)) = (stubSectionHeader[stubFileHeader->NumberOfSections - 1].VirtualAddress) + stubOptionalHeader->ImageBase;
 					//printf("\t\t[.ryanb VA swapped for 0x31323334 VA] %x \n", (*(uint32_t *)(stub + stubSectionHeader[stubFileHeader->NumberOfSections - i].PointerToRawData + x)));
 				}
@@ -231,13 +264,14 @@ int stubAddSection( uint32_t * rsize, uint8_t * stub, int sizeOfStub, PIMAGE_DOS
 		{
 			for (int x = 0; x < stubSectionHeader[stubFileHeader->NumberOfSections - i].SizeOfRawData; x++)
 			{
-				if ((*(uint32_t *)(stub + stubSectionHeader[stubFileHeader->NumberOfSections - i].PointerToRawData + x)) == 0x69696969) 
+				if ((*(uint32_t *)(stub + stubSectionHeader[stubFileHeader->NumberOfSections - i].PointerToRawData + x)) == MAGIC_SIZE) 
 				{
 					(*(uint32_t *)(stub + stubSectionHeader[stubFileHeader->NumberOfSections - i].PointerToRawData + x)) = maintainRsize;//size
 				}
 			}
 		}
 	}
+
 	return TRUE;
 }
 

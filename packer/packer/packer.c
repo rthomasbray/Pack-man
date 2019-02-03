@@ -3,7 +3,7 @@
 int main(int argc, char ** argv) {
 	char exe_file_path[MAX_PATH] = "C://Users/Ryan Thomas Bray/Desktop/packer/Debug/calc_pi.exe";
 	char out_file_path[MAX_PATH] = "C://Users/Ryan Thomas Bray/Desktop/packer/Debug/test.exe";
-	uint8_t key[KEY_LEN] = { 'a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z','a','b','c','d','e','f' };
+	uint8_t key[KEY_LEN] = { 0 };
 
 	// Check that the correct arguments were provided to the program
 	// If incorrect arguments were provided then print usage statement and exit
@@ -18,6 +18,10 @@ int main(int argc, char ** argv) {
 	// Cool version: generate a random key
 	// for now opting for lame;  is intialized above..
 	printf("\n\n[+] Generating key\n");
+	for (int i = 0; i < KEY_LEN; i++)
+	{
+		key[i] = (uint8_t)rand();
+	}
 
 	// Get the file bytes from the input file
 	// Filename is stored in exe_file_path
