@@ -44,7 +44,6 @@ int loader(uint8_t * data)
 	else
 	{
 		printf("\t[+] Preffered recieved\n");
-		
 		//printf("\t[standard BA recieved] %x\n", bufferOptionalHeader->ImageBase);
 		//exit(0);
 	}
@@ -57,9 +56,7 @@ int loader(uint8_t * data)
 	for (int i = bufferFileHeader->NumberOfSections; i > 0; i--)
 	{
 		currAddr = (uint8_t *)(bufferSectionHeader[bufferFileHeader->NumberOfSections - i].VirtualAddress + offset + bufferOptionalHeader->ImageBase);
-		
 		//printf("\t[Loaded into mem address] %x\n", currAddr);
-
 		CopyMemory(currAddr, data + bufferSectionHeader[bufferFileHeader->NumberOfSections - i].PointerToRawData, bufferSectionHeader[bufferFileHeader->NumberOfSections - i].SizeOfRawData);
 	}
 
@@ -139,9 +136,6 @@ int loader(uint8_t * data)
 
 		uint8_t * currentDLLName = (uint8_t *)(baseAddress + bufferImportDescriptor->Name);
 		//printf("[Current lib] %s\n", currentDLLName);
-
-		
-	
 		//load dll into memory hMod = LoadLibraryA((CHAR*) pLibName);
 		HMODULE hmod = LoadLibraryA((uint8_t *)currentDLLName);
 
@@ -157,13 +151,11 @@ int loader(uint8_t * data)
 
 		//while more to check
 		while (currentThunk->u1.AddressOfData != 0)
-		{
-			
+		{			
 			//get current function and load thenget proc address
 			PIMAGE_IMPORT_BY_NAME importByName = (PIMAGE_IMPORT_BY_NAME)(baseAddress + currentThunk->u1.AddressOfData);
 			currentThunk->u1.AddressOfData = (uint32_t)GetProcAddress(hmod, (uint8_t *)importByName->Name);
 			//printf("%s\n", importByName->Name);
-
 
 			//verify its load location
 			if (!currentThunk->u1.AddressOfData)
@@ -171,12 +163,9 @@ int loader(uint8_t * data)
 				printf("%s", "[-] Unable to handle imports\n");
 				exit(0);
 			}
-			
 			//next thunk
 			currentThunk++;
-		
 		}
-
 		//get next dll
 		bufferImportDescriptor++;
 
