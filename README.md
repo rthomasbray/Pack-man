@@ -1,6 +1,8 @@
 # Custom Packer Creation
 ## Ryan Thomas Bray
 
+
+
 ## Execution instructions
 To execute the program, navigate to the packer/release where the `stub.exe` and `packer.exe` files can be found.  To pack a program, use the command `packer.exe [EXE_FILE_HERE]`(i.e. `packer.exe calc_pi.exe`).  This will result in the creation of `test.exe`.  To execute the packed program, use the command `test.exe`. 
 
@@ -62,4 +64,4 @@ The stub also contained two anti-debugging techniques incase curious users attem
 ## Disclaimer
 
 The encryption/decryption and compression/decompression libraries were not written nor implemented by me.
-
+This project was created to learn about packers and windows PE binaries.  This project is not meant to be used in a malicious way.
