@@ -7,10 +7,7 @@ uint32_t bufferSize =MAGIC_SIZE;
 
 int main() 
 {
-	// To mark the start
-	//printf("Hello World from the stub2\n"); 
-
-
+	
 	// first anti debug technique
 	__asm
 	{
@@ -33,12 +30,8 @@ int main()
 	}
 	
 
-
-
-
 	//getting pointer to .ryanb
 	uint8_t * buffer =(uint8_t *)&flag;
-	//printf("[buffer size] %d\n", bufferSize);
 
 	//creating new buffer to deal with change in size
 	uint8_t * newBuff = malloc(bufferSize);
@@ -47,21 +40,13 @@ int main()
 
 	
 	//getting pointer to decryption key
-	
 	for (size_t i = 0; i < 32; i++)
 	{
 		printf("%c", key[i]);
 	}
 	printf("\n");
 	
-
-
-
-	//printf("[E&C TEST BYTE] %x\n", *(buffer));
-	//printf("[E&C TEST BYTE] %x\n", *(buffer + 1));
-	//printf("[E&C TEST BYTE] %x\n", *(buffer+5086));
-	//printf("[E&C TEST BYTE] %x\n", *(buffer+5087));
-
+	// this was used before "random" key gen
 	//Same key as in packer
 	//uint8_t key[KEY_LEN] = { 'a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z','a','b','c','d','e','f' };
 
@@ -70,22 +55,10 @@ int main()
 	decrypt(&newBuff, &bufferSize, key);
 	printf("[+] Decrypting complete\n");
 
-	
-	//printf("[FIN TEST BYTE] %x\n", *(buffer));
-	//printf("[FIN TEST BYTE] %x\n", *(buffer + 1));
-	//printf("[FIN TEST BYTE] %x\n", *(buffer + 2));
-
 	// Decompress the data - see function below
 	printf("[+] Decompressing\n");
 	decompress(&newBuff, &bufferSize);
 	printf("[+] Decompression complete\n");
-
-
-	//verifying the bytes are correct
-	//printf("[f TEST BYTE] %x\n", *(buffer));
-	//printf("[f TEST BYTE] %x\n", *(buffer + 1));
-	//printf("[f TEST BYTE] %x\n", *(buffer + 2));
-	//printf("[f TEST BYTE] %x\n", *(buffer + 0x860));
 
 	// Pass data into loader function
 	printf("[+] Passing to loader\n");
@@ -102,11 +75,6 @@ DBG_Dest:
 }
 
 int decompress(uint8_t ** buffer,uint32_t * size) {
-	//printf("[D] Buffer recv by decompress was: \n");
-	//for (size_t i = 0; i < *size; i++)
-	//{
-	//	printd(" %02x", (*buffer)[i]);
-	//}
 	
 	COMPRESSOR_HANDLE Decompressor = NULL;
 	BOOL Success;

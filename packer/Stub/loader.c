@@ -25,7 +25,7 @@ int loader(uint8_t * data)
 	
 	// Reserve memory for the program
 	// Attempt to get prefered base address. If cannot calculate offset.
-	//virtual protect will help change the memory permissions
+	// virtual protect will help change the memory permissions
 	printf("[+] Reserving memory for pgrm\n");
 	int32_t offset = 0;
 	uint8_t * baseAddress = VirtualAlloc((LPVOID)bufferOptionalHeader->ImageBase, bufferOptionalHeader->SizeOfImage, MEM_RESERVE | MEM_COMMIT, PAGE_EXECUTE_READWRITE);
@@ -34,29 +34,22 @@ int loader(uint8_t * data)
 		baseAddress = VirtualAlloc(NULL, bufferOptionalHeader->SizeOfImage, MEM_RESERVE | MEM_COMMIT, PAGE_EXECUTE_READWRITE);
 		offset = (uint32_t)baseAddress - bufferOptionalHeader->ImageBase;
 
-		//printf("\t[OFFSET] %x\n", offset);
-		//printf("\t[non-standard BA] %x\n", baseAddress);
 		printf("\t[+] Preffered not received...\n");
 
 		relocFlag = 1;
-		//exit(0);
 	}
 	else
 	{
 		printf("\t[+] Preffered recieved\n");
-		//printf("\t[standard BA recieved] %x\n", bufferOptionalHeader->ImageBase);
-		//exit(0);
 	}
 
 	// Load sections from the sections table into memory (only text and data)
-
 	uint8_t * currAddr = { 0 };
 
 	//places each section in memory one by one
 	for (int i = bufferFileHeader->NumberOfSections; i > 0; i--)
 	{
 		currAddr = (uint8_t *)(bufferSectionHeader[bufferFileHeader->NumberOfSections - i].VirtualAddress + offset + bufferOptionalHeader->ImageBase);
-		//printf("\t[Loaded into mem address] %x\n", currAddr);
 		CopyMemory(currAddr, data + bufferSectionHeader[bufferFileHeader->NumberOfSections - i].PointerToRawData, bufferSectionHeader[bufferFileHeader->NumberOfSections - i].SizeOfRawData);
 	}
 
@@ -69,10 +62,6 @@ int loader(uint8_t * data)
 
 		// getting pointer to base of relocation
 		PIMAGE_BASE_RELOCATION baseRelocation = (PIMAGE_BASE_RELOCATION)(baseAddress + bufferNTHeader->OptionalHeader.DataDirectory[IMAGE_DIRECTORY_ENTRY_BASERELOC].VirtualAddress);
-
-		//printf("[size of block] %x\n", baseRelocation->SizeOfBlock); 
-		
-		//printf("[theoretical entry address] %x\n", baseRelocation->VirtualAddress + bufferOptionalHeader->ImageBase);
 
 		// while no more blocks
 		while (baseRelocation->SizeOfBlock)
@@ -99,7 +88,6 @@ int loader(uint8_t * data)
 				if (IMAGE_REL_BASED_HIGHLOW == status)
 				{
 					//fix up the address to point at the correct space
-					//printf("[+] %x\n", thingOffset);
 					uint32_t * fixUpLoc = currentAddress + thingOffset;
 					*fixUpLoc = *fixUpLoc + offset;
 				}
@@ -113,15 +101,11 @@ int loader(uint8_t * data)
 			baseRelocation = (PIMAGE_BASE_RELOCATION)(((DWORD)baseRelocation) + baseRelocation->SizeOfBlock);
 		}
 	}
-	
-
 
 	// Handling imports table
 
 	//get image descriptor
 	PIMAGE_IMPORT_DESCRIPTOR  bufferImportDescriptor = (PIMAGE_IMPORT_DESCRIPTOR)(baseAddress + bufferNTHeader->OptionalHeader.DataDirectory[IMAGE_DIRECTORY_ENTRY_IMPORT].VirtualAddress);
-
-	//printf("[current image base] %x\n", baseAddress);
 
 	if (!bufferImportDescriptor)
 	{
@@ -135,7 +119,7 @@ int loader(uint8_t * data)
 		//verify name
 
 		uint8_t * currentDLLName = (uint8_t *)(baseAddress + bufferImportDescriptor->Name);
-		//printf("[Current lib] %s\n", currentDLLName);
+
 		//load dll into memory hMod = LoadLibraryA((CHAR*) pLibName);
 		HMODULE hmod = LoadLibraryA((uint8_t *)currentDLLName);
 

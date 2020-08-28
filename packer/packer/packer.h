@@ -9,6 +9,7 @@
 
 #define KEY_LEN 32
 
+// testing values
 #define MAGIC_KEY 0x4e4e4e4e
 #define MAGIC_SIZE 0x69696969
 #define MAGIC_ADDR 0x31323334

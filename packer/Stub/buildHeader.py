@@ -1,7 +1,3 @@
-## Stephen Moffitt - SRE 2018 - P5 helper script
-## Requires Python 3 - Sorry everyone :(
-## This will copy the bytes into the header for use.
-
 import sys
 
 stub_path = sys.argv[1]

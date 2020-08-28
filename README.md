@@ -8,7 +8,7 @@ Note: this packer is platform specific and only runs with portable executables (
 
 ## Methodology
 
-### General Overview
+### Project Overview
 Generally, the packer is broken up into two sections.  The first section is the packer.  The idea of the packer is to take two programs and add one to another and output it to a separate file.  One of the programs the packer requires is the stub (this will be talked about in another section).  The other program that the packer requires is any executable (.exe).  The packer will then add the user specified executable as a section to the end of the stub.exe executable.  The purpose for this is to hide an executable within another.  For example, if a malicious actor wanted to create a piece of trojan ware, it would be useful to hide it within another program so that Intrusion Detection Systems and Operating Systems would be unable to detect its presence.  The Second part of the packer is the stub.  The stub acts as a loader for the user defined executable.  Its goal is to decrypt, decompress and then execute the binary in memory.
 
 ### Packer Design
@@ -57,4 +57,9 @@ Once these steps are complete the entry point for the executable is casted to a 
 ![alt text](imgs/crackme.png "crackme.exe")
 
 The stub also contained two anti-debugging techniques incase curious users attempted to debug the executable.  The two techniques used are `MOV SS` and `Close Handle`.  These two techniques would detect the presence and the immediately kill the programs instance.  
+
+
+## Disclaimer
+
+The encryption/decryption and compression/decompression libraries were not written nor implemented by me.
 

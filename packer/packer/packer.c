@@ -6,17 +6,13 @@ int main(int argc, char ** argv) {
 	uint8_t key[KEY_LEN] = { 0 };
 
 	// Check that the correct arguments were provided to the program
-	// If incorrect arguments were provided then print usage statement and exit
-
-	if (!getArgs(argc, argv, exe_file_path)) {
+	if (!getArgs(argc, argv, exe_file_path)) 
+	{
 		printUsage();
 		return FALSE;
 	}
 	
 	// Generate a key to encrypt with
-	// Lame version: just create a static key
-	// Cool version: generate a random key
-	// for now opting for lame;  is intialized above..
 	printf("\n\n[+] Generating key\n");
 	for (int i = 0; i < KEY_LEN; i++)
 	{
@@ -28,16 +24,22 @@ int main(int argc, char ** argv) {
 
 	//get file pointer
 	FILE * inputFilePointer = fopen(exe_file_path, "rb");
+
 	//get the end of file
 	fseek(inputFilePointer, 0, SEEK_END);
+
 	//calculate the offset
 	uint32_t inputFileLength = ftell(inputFilePointer);
+
 	// revert the file pointer to the begining 
 	rewind(inputFilePointer);
+
 	//allocate space for fileBuffer
 	uint8_t * inputFileBuffer = (uint8_t *)malloc(inputFileLength);
+
 	//read in file to fileBuffer
 	fread(inputFileBuffer, inputFileLength, 1, inputFilePointer);
+
 	//close input file
 	fclose(inputFilePointer);
 	
@@ -54,12 +56,10 @@ int main(int argc, char ** argv) {
 	printf("[+] Opening file\n");
 	FILE * outputFilePointer;
 	outputFilePointer = fopen("test.exe", "wb");
-	//printf("%x\n", outputFilePointer);
 
 
 	// Write to output file
 	printf("[+] Writing to file\n");
-	//printf("[D] File size: %d\n", outputSize);
 	fwrite(outputBuffer, outputSize, 1 , outputFilePointer);
 	
 
@@ -75,25 +75,31 @@ int main(int argc, char ** argv) {
 
 
 // Prints the usage information for the packer
-void printUsage() {
+void printUsage() 
+{
+
 	printf("Usage: \"packer.exe exe_file_to_pack\"\n");
 }
+
+
 // parser the packer arguments
-int getArgs(int argc,char ** argv, char * path) {
-	if (argc != 2) {
+int getArgs(int argc,char ** argv, char * path) 
+{
+	if (argc != 2) 
+	{
 		return FALSE;
 	}
-	//printf("copy path\n");
 	//Copy file path
 	strncpy_s(path,MAX_PATH,argv[1], MAX_PATH);
 
-	//printf("check path\n");
 	// Make sure the file path exists
-	if(!PathFileExists(path)){
+	if(!PathFileExists(path))
+	{
 		printf("The file does not exist!\n");
 		return FALSE;
 	}
-	else {
+	else 
+	{
 		return TRUE;
 	}
 
